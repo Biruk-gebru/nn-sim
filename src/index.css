@@ -1,17 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0a0a0f;
-  --surface: #12121a;
-  --border: #1e1e2e;
-  --text: #c0c0d0;
-  --text-dim: #606070;
-  --cyan: #00f5ff;
-  --cyan-dim: rgba(0, 245, 255, 0.15);
-  --orange: #ff8c00;
-  --blue: #4488ff;
-  --red: #ff4466;
-  --green: #00ff88;
+  /* Backgrounds */
+  --bg:           #031634;
+  --surface:      #042445;
+  --surface-alt:  #033649;
+  --deep:         #021228;
+
+  /* Borders */
+  --border:       rgba(3, 101, 100, 0.35);
+  --border-mid:   #036564;
+  --border-strong:#0a8a88;
+
+  /* Text */
+  --text:         #e8ddcb;
+  --text-mid:     #b0a07a;
+  --text-dim:     #607060;
+  --text-faint:   #2e4040;
+
+  /* Accents */
+  --accent:       #cdb380;
+  --accent-dim:   rgba(205, 179, 128, 0.13);
+  --accent-hover: #e8ddcb;
+
+  /* Animation / functional */
+  --teal:         #4ecdc4;
+  --teal-dim:     rgba(78, 205, 196, 0.13);
+  --red:          #c44d58;
+  --red-dim:      rgba(196, 77, 88, 0.13);
+  --orange:       #d4943a;
+  --orange-dim:   rgba(212, 148, 58, 0.13);
+  --blue:         #5b8fa6;
+  --green:        #7ab88a;
+  --green-dim:    rgba(122, 184, 138, 0.13);
 }
 
 * { box-sizing: border-box; }
@@ -21,7 +42,6 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: ui-monospace, Consolas, monospace;
-  overflow: hidden;
 }
 
 #root {
@@ -30,3 +50,8 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* Shared scrollbar styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 3px; }
