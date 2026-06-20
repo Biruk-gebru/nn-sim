@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useSimStore, ARCHITECTURE } from '../../store/useSimStore';
+import { useSimStore } from '../../store/useSimStore';
 import type { AnimPhase } from '../../store/useSimStore';
 import type { NeuronPos } from './NetworkGraph';
 
@@ -24,13 +24,12 @@ interface Props {
 }
 
 export function NeuronNode({ pos, radius, postActivation, delta, animPhase, animWaveIdx, onHover, onHoverEnd }: Props) {
-  const { selectedNeuron, setSelectedNeuron } = useSimStore();
+  const { selectedNeuron, setSelectedNeuron, architecture } = useSimStore();
   const isSelected = selectedNeuron?.layer === pos.layer && selectedNeuron?.neuron === pos.neuron;
   const isInput = pos.layer === 0;
 
-  const isFlashing =
-    (animPhase === 'forward' && animWaveIdx === pos.layer - 1) ||
-    (animPhase === 'backward' && animWaveIdx === pos.layer - 1);
+  // flash the layer that is currently receiving/computing (forward: destination layer, backward: source layer)
+  const isFlashing = animWaveIdx === pos.layer - 1;
 
   const fill = activationToColor(postActivation);
   const glowColor = postActivation !== null && postActivation > 0.5 ? '#00f5ff' : '#4488ff';
@@ -60,7 +59,7 @@ export function NeuronNode({ pos, radius, postActivation, delta, animPhase, anim
         <circle cx={pos.x} cy={pos.y} r={radius + 6} fill="none" stroke="#00f5ff" strokeWidth={2} opacity={0.6} />
       )}
 
-      {/* Hover ring */}
+      {/* Expanded hit area */}
       <circle cx={pos.x} cy={pos.y} r={radius + 10} fill="transparent" />
 
       <motion.circle
@@ -77,7 +76,7 @@ export function NeuronNode({ pos, radius, postActivation, delta, animPhase, anim
 
       {pos.neuron === 0 && (
         <text x={pos.x} y={pos.y - radius - 10} textAnchor="middle" fontSize={11} fill="#606070">
-          {pos.layer === 0 ? 'Input' : pos.layer === ARCHITECTURE.length - 1 ? 'Output' : 'Hidden'}
+          {pos.layer === 0 ? 'Input' : pos.layer === architecture.length - 1 ? 'Output' : 'Hidden'}
         </text>
       )}
 

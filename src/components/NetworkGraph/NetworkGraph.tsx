@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { ARCHITECTURE } from '../../store/useSimStore';
+import { useMemo, useState } from 'react';
 import { useSimStore } from '../../store/useSimStore';
 import { NeuronNode } from './NeuronNode';
 import { EdgeLink } from './EdgeLink';
@@ -22,7 +21,7 @@ export interface NeuronPos {
 function computePositions(arch: number[]): NeuronPos[] {
   const positions: NeuronPos[] = [];
   const layerCount = arch.length;
-  const xStep = (W - LAYER_PADDING_X * 2) / (layerCount - 1);
+  const xStep = (W - LAYER_PADDING_X * 2) / Math.max(layerCount - 1, 1);
 
   for (let l = 0; l < layerCount; l++) {
     const count = arch[l];
@@ -36,31 +35,32 @@ function computePositions(arch: number[]): NeuronPos[] {
   return positions;
 }
 
-export const positions = computePositions(ARCHITECTURE);
-
-export function getPos(layer: number, neuron: number): NeuronPos {
-  return positions.find((p) => p.layer === layer && p.neuron === neuron)!;
-}
-
 export function NetworkGraph() {
-  const { history, currentEpoch, animPhase, animWaveIdx } = useSimStore();
+  const { history, currentEpoch, animPhase, animWaveIdx, architecture } = useSimStore();
   const snap = history[currentEpoch - 1] ?? null;
 
-  const [hoveredNeuron, setHoveredNeuron] = useState<{ layer: number; neuron: number } | null>(null);
+  const positions = useMemo(() => computePositions(architecture), [architecture]);
+  const getPos = (layer: number, neuron: number) =>
+    positions.find((p) => p.layer === layer && p.neuron === neuron)!;
 
+  const [hoveredNeuron, setHoveredNeuron] = useState<{ layer: number; neuron: number } | null>(null);
   const hoveredPos = hoveredNeuron ? getPos(hoveredNeuron.layer, hoveredNeuron.neuron) : null;
   const hoveredTrace = hoveredNeuron
     ? snap?.neurons[hoveredNeuron.layer]?.[hoveredNeuron.neuron] ?? null
     : null;
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ overflow: 'visible' }}>
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="xMidYMid meet"
+      style={{ width: '100%', height: '100%', overflow: 'visible', maxHeight: '100%' }}
+    >
       {/* Edges */}
       {positions
         .filter((p) => p.layer > 0)
         .map((toPos) => {
           const fromLayer = toPos.layer - 1;
-          const fromCount = ARCHITECTURE[fromLayer];
+          const fromCount = architecture[fromLayer];
           return Array.from({ length: fromCount }, (_, fi) => {
             const fromPos = getPos(fromLayer, fi);
             const edge = snap?.edges.find(
@@ -89,7 +89,7 @@ export function NetworkGraph() {
       {animPhase === 'forward' && animWaveIdx >= 0 &&
         positions.filter((p) => p.layer === animWaveIdx + 1).map((toPos) => {
           const fromLayer = toPos.layer - 1;
-          return Array.from({ length: ARCHITECTURE[fromLayer] }, (_, fi) => {
+          return Array.from({ length: architecture[fromLayer] }, (_, fi) => {
             const fromPos = getPos(fromLayer, fi);
             const edge = snap?.edges.find(
               (e) => e.fromLayer === fromLayer && e.fromNeuron === fi && e.toLayer === toPos.layer && e.toNeuron === toPos.neuron
@@ -109,7 +109,7 @@ export function NetworkGraph() {
       {animPhase === 'backward' && animWaveIdx >= 0 &&
         positions.filter((p) => p.layer === animWaveIdx + 1).map((toPos) => {
           const fromLayer = toPos.layer - 1;
-          return Array.from({ length: ARCHITECTURE[fromLayer] }, (_, fi) => {
+          return Array.from({ length: architecture[fromLayer] }, (_, fi) => {
             const fromPos = getPos(fromLayer, fi);
             const neuron = snap?.neurons[toPos.layer]?.[toPos.neuron];
             return (
