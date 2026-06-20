@@ -2,61 +2,84 @@ import { NetworkGraph } from './components/NetworkGraph/NetworkGraph';
 import { Inspector } from './components/Inspector/Inspector';
 import { Controls } from './components/Controls/Controls';
 import { LossChart } from './components/LossChart/LossChart';
+import { PredictionTable } from './components/PredictionTable/PredictionTable';
 import { useSimStore, DATASETS } from './store/useSimStore';
 import { usePlayLoop } from './hooks/usePlayLoop';
+import { useKeyboard } from './hooks/useKeyboard';
 
 export default function App() {
   usePlayLoop();
-  const { dataset } = useSimStore();
+  useKeyboard();
+
+  const { dataset, architecture, activationNames, isConverged } = useSimStore();
+  const archStr = architecture.join(' → ');
+  const actStr = [...new Set(activationNames)].join('/');
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#0a0a0f' }}>
       {/* Header */}
       <div style={{
-        padding: '12px 24px',
+        padding: '10px 20px',
         borderBottom: '1px solid #1e1e2e',
         display: 'flex',
         alignItems: 'center',
-        gap: 16,
+        gap: 12,
         flexShrink: 0,
+        flexWrap: 'wrap',
+        rowGap: 4,
       }}>
         <h1 style={{
           margin: 0,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: 600,
           color: '#00f5ff',
           letterSpacing: 1,
           fontFamily: 'ui-monospace, monospace',
+          whiteSpace: 'nowrap',
         }}>
           Neural Network Simulator
         </h1>
-        <span style={{ fontSize: 12, color: '#606070' }}>
-          {dataset} · 2 → 3 → 1 · Sigmoid
+        <span style={{ fontSize: 11, color: '#606070' }}>
+          {dataset} · {archStr} · {actStr}
         </span>
-        <span style={{ marginLeft: 'auto', fontSize: 12, color: '#4488ff' }}>
-          Click any hidden or output neuron to inspect it
+        {isConverged && (
+          <span style={{ fontSize: 11, color: '#00ff88' }}>· converged</span>
+        )}
+        <span style={{ marginLeft: 'auto', fontSize: 11, color: '#4488ff' }}>
+          Click any hidden or output neuron to inspect
         </span>
       </div>
 
       {/* Main content */}
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative', flexWrap: 'wrap' }}>
         {/* Network canvas */}
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+        <div style={{
+          flex: '1 1 400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 16,
+          minWidth: 0,
+          minHeight: 260,
+        }}>
           <NetworkGraph />
         </div>
 
         {/* Right sidebar */}
         <div style={{
           width: 260,
-          padding: '20px 16px',
+          minWidth: 220,
+          padding: '16px 14px',
           borderLeft: '1px solid #1e1e2e',
           display: 'flex',
           flexDirection: 'column',
-          gap: 20,
+          gap: 18,
           flexShrink: 0,
+          overflowY: 'auto',
         }}>
           <LossChart />
           <TruthTable />
+          <PredictionTable />
           <Legend />
         </div>
 
