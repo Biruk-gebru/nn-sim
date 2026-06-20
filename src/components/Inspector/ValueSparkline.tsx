@@ -5,9 +5,9 @@ interface Props {
   color?: string;
 }
 
-export function ValueSparkline({ values, width = 220, height = 50, color = '#00f5ff' }: Props) {
+export function ValueSparkline({ values, width = 220, height = 50, color = '#4ecdc4' }: Props) {
   if (values.length < 2) {
-    return <div style={{ width, height, opacity: 0.3, fontSize: 11, color: '#606070' }}>Not enough data yet</div>;
+    return <div style={{ width, height, opacity: 0.3, fontSize: 11, color: 'var(--text-dim)' }}>Not enough data yet</div>;
   }
 
   const display = values.slice(-200);
@@ -24,19 +24,12 @@ export function ValueSparkline({ values, width = 220, height = 50, color = '#00f
     .join(' ');
 
   const last = display[display.length - 1];
-  const lastX = width;
   const lastY = height - ((last - min) / range) * height;
 
   return (
     <svg width={width} height={height} style={{ display: 'block' }}>
-      <polyline
-        points={points}
-        fill="none"
-        stroke={color}
-        strokeWidth={1.5}
-        opacity={0.7}
-      />
-      <circle cx={lastX} cy={lastY} r={3} fill={color} />
+      <polyline points={points} fill="none" stroke={color} strokeWidth={1.5} opacity={0.7} />
+      <circle cx={width} cy={lastY} r={3} fill={color} />
     </svg>
   );
 }

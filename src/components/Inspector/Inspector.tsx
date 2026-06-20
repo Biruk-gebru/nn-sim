@@ -20,15 +20,15 @@ export function Inspector() {
             right: 0,
             width: 300,
             height: '100%',
-            background: '#0e0e18',
-            borderLeft: '1px solid #1e1e2e',
+            background: 'var(--surface-alt)',
+            borderLeft: '1px solid var(--border-mid)',
             padding: 20,
             overflowY: 'auto',
             zIndex: 10,
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <span style={{ fontSize: 13, color: '#00f5ff', letterSpacing: 1, textTransform: 'uppercase' }}>
+            <span style={{ fontSize: 11, color: 'var(--accent)', letterSpacing: 1.5, textTransform: 'uppercase' }}>
               Neuron Inspector
             </span>
             <button
@@ -36,7 +36,7 @@ export function Inspector() {
               style={{
                 background: 'none',
                 border: 'none',
-                color: '#606070',
+                color: 'var(--text-dim)',
                 cursor: 'pointer',
                 fontSize: 18,
                 lineHeight: 1,

@@ -18,8 +18,8 @@ export function DataPulse({ x1, y1, x2, y2, signal }: Props) {
     >
       <motion.circle
         r={7}
-        fill="#00f5ff"
-        style={{ filter: 'drop-shadow(0 0 6px #00f5ff)' }}
+        fill="#4ecdc4"
+        style={{ filter: 'drop-shadow(0 0 6px #4ecdc4)' }}
         initial={{ cx: x1, cy: y1 }}
         animate={{ cx: x2, cy: y2 }}
         transition={{ duration, ease: 'easeInOut' }}
@@ -27,7 +27,7 @@ export function DataPulse({ x1, y1, x2, y2, signal }: Props) {
       <motion.text
         textAnchor="middle"
         fontSize={9}
-        fill="#000"
+        fill="#031634"
         fontWeight="bold"
         style={{ pointerEvents: 'none', userSelect: 'none' }}
         initial={{ x: x1, y: y1 + 3 }}

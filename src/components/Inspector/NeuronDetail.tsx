@@ -18,45 +18,45 @@ export function NeuronDetail() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
         <div style={{
-          background: '#00f5ff22',
-          border: '1px solid #00f5ff44',
-          borderRadius: 6,
+          background: 'var(--accent-dim)',
+          border: '1px solid var(--accent)',
+          borderRadius: 5,
           padding: '3px 10px',
-          fontSize: 12,
-          color: '#00f5ff',
+          fontSize: 11,
+          color: 'var(--accent)',
           letterSpacing: 0.5,
         }}>
           {act?.name ?? 'Linear'}
         </div>
-        <span style={{ fontSize: 12, color: '#606070' }}>
+        <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>
           {isOutput ? 'Output' : 'Hidden'} L{layer}·N{neuron + 1}
         </span>
       </div>
 
-      <div style={{ fontSize: 13, color: '#9090a0', lineHeight: 1.65 }}>
+      <div style={{ fontSize: 13, color: 'var(--text-mid)', lineHeight: 1.65, fontFamily: 'system-ui, sans-serif' }}>
         {act?.explanation ?? ''}
       </div>
 
-      <div style={{ borderTop: '1px solid #1e1e2e' }} />
+      <div style={{ height: 1, background: 'var(--border)' }} />
 
       {trace && act ? (
         <ComputationTree trace={trace} act={act} />
       ) : (
-        <div style={{ fontSize: 12, color: '#606070' }}>
+        <div style={{ fontSize: 12, color: 'var(--text-dim)' }}>
           Step the network to see computation details.
         </div>
       )}
 
-      <div style={{ borderTop: '1px solid #1e1e2e' }} />
+      <div style={{ height: 1, background: 'var(--border)' }} />
 
       <div>
-        <div style={{ fontSize: 10, color: '#606070', marginBottom: 8, letterSpacing: 1 }}>
+        <div style={{ fontSize: 10, color: 'var(--text-dim)', marginBottom: 8, letterSpacing: 1 }}>
           OUTPUT ACTIVATION · EPOCH HISTORY
         </div>
         <ValueSparkline values={activationHistory} />
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-          <span style={{ fontSize: 10, color: '#2a2a3e' }}>epoch 1</span>
-          <span style={{ fontSize: 10, color: '#2a2a3e' }}>{activationHistory.length}</span>
+          <span style={{ fontSize: 10, color: 'var(--text-faint)' }}>epoch 1</span>
+          <span style={{ fontSize: 10, color: 'var(--text-faint)' }}>{activationHistory.length}</span>
         </div>
       </div>
     </div>

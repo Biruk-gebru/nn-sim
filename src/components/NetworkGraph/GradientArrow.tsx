@@ -18,8 +18,8 @@ export function GradientArrow({ x1, y1, x2, y2, delta }: Props) {
     >
       <motion.circle
         r={7}
-        fill="#ff4466"
-        style={{ filter: 'drop-shadow(0 0 6px #ff4466)' }}
+        fill="#c44d58"
+        style={{ filter: 'drop-shadow(0 0 6px #c44d58)' }}
         initial={{ cx: x1, cy: y1 }}
         animate={{ cx: x2, cy: y2 }}
         transition={{ duration, ease: 'easeInOut' }}
@@ -27,7 +27,7 @@ export function GradientArrow({ x1, y1, x2, y2, delta }: Props) {
       <motion.text
         textAnchor="middle"
         fontSize={9}
-        fill="#fff"
+        fill="#e8ddcb"
         fontWeight="bold"
         style={{ pointerEvents: 'none', userSelect: 'none' }}
         initial={{ x: x1, y: y1 + 3 }}
