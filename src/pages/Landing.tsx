@@ -12,42 +12,42 @@ const MODULES: Module[] = [
   {
     path: '/nn',
     label: 'Neural Network',
-    tagline: 'Watch forward pass and backpropagation animate layer by layer.',
+    tagline: 'Watch forward pass and backpropagation animate layer by layer in real time.',
     status: 'live',
     icon: <NNIcon />,
   },
   {
     path: '/tokenizer',
     label: 'Tokenizer',
-    tagline: 'See how raw text is split into tokens before entering a model.',
+    tagline: 'See how raw text is broken into tokens before it ever reaches a model.',
     status: 'soon',
     icon: <TokenIcon />,
   },
   {
     path: '/embeddings',
     label: 'Embeddings',
-    tagline: 'Words as vectors — explore similarity in a 2D projection.',
+    tagline: 'Words mapped to vectors — explore similarity and distance in 2D space.',
     status: 'soon',
     icon: <EmbedIcon />,
   },
   {
     path: '/regression',
     label: 'Linear Regression',
-    tagline: 'Gradient descent fitting a line to data points in real time.',
+    tagline: 'Drag data points and watch gradient descent fit a line in real time.',
     status: 'soon',
     icon: <RegressionIcon />,
   },
   {
     path: '/activations',
     label: 'Activations',
-    tagline: 'Compare sigmoid, ReLU, tanh, and GELU side by side interactively.',
+    tagline: 'Compare sigmoid, ReLU, tanh, and GELU interactively on a single canvas.',
     status: 'soon',
     icon: <ActIcon />,
   },
   {
     path: '/attention',
     label: 'Attention',
-    tagline: 'Query, key, and value — see which tokens attend to which.',
+    tagline: 'Query, key, and value — see which tokens attend to which and why.',
     status: 'soon',
     icon: <AttentionIcon />,
   },
@@ -58,47 +58,69 @@ export function Landing() {
     <div style={{
       flex: 1,
       overflowY: 'auto',
-      padding: '64px 48px',
       background: 'var(--bg)',
     }}>
       {/* Hero */}
-      <div style={{ maxWidth: 640, marginBottom: 64 }}>
-        <div style={{ fontSize: 11, color: 'var(--border-strong)', letterSpacing: 3, marginBottom: 16 }}>
-          INTERACTIVE MACHINE LEARNING
+      <div style={{
+        padding: '80px 56px 64px',
+        borderBottom: '1px solid var(--border)',
+        maxWidth: 1200,
+      }}>
+        <div style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          background: 'var(--surface)',
+          border: '1px solid var(--border-mid)',
+          borderRadius: 20,
+          padding: '4px 14px',
+          marginBottom: 28,
+        }}>
+          <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)' }} />
+          <span style={{ fontSize: 11, color: 'var(--text-dim)', letterSpacing: 1.2, fontWeight: 500 }}>
+            INTERACTIVE ML DEMOS
+          </span>
         </div>
+
         <h1 style={{
           margin: '0 0 20px',
-          fontSize: 42,
-          fontWeight: 700,
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(36px, 5vw, 60px)',
+          fontWeight: 800,
           color: 'var(--text)',
-          lineHeight: 1.15,
-          letterSpacing: -0.5,
+          lineHeight: 1.1,
+          letterSpacing: -1,
+          maxWidth: 620,
         }}>
           Learn ML by<br />
           <span style={{ color: 'var(--accent)' }}>watching it work.</span>
         </h1>
+
         <p style={{
           margin: 0,
-          fontSize: 16,
+          fontSize: 17,
           color: 'var(--text-mid)',
-          lineHeight: 1.7,
-          fontFamily: 'system-ui, sans-serif',
+          lineHeight: 1.75,
+          maxWidth: 480,
+          fontWeight: 400,
         }}>
-          Each module is a live, interactive demo. No slides. No passive reading.
-          Adjust the parameters and see what happens.
+          Each module is a live, interactive demo. Adjust parameters and see
+          what actually happens — no slides, no passive reading.
         </p>
       </div>
 
       {/* Module grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-        gap: 20,
-        maxWidth: 1100,
-      }}>
-        {MODULES.map((mod) => (
-          <ModuleCard key={mod.path} mod={mod} />
-        ))}
+      <div style={{ padding: '48px 56px 80px' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: 16,
+          maxWidth: 1100,
+        }}>
+          {MODULES.map((mod) => (
+            <ModuleCard key={mod.path} mod={mod} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -107,57 +129,66 @@ export function Landing() {
 function ModuleCard({ mod }: { mod: Module }) {
   const live = mod.status === 'live';
 
-  const card = (
-    <div style={{
-      background: 'var(--surface)',
-      border: `1px solid ${live ? 'var(--border-mid)' : 'var(--border)'}`,
-      borderRadius: 12,
-      padding: 24,
-      cursor: live ? 'pointer' : 'default',
-      transition: 'border-color 0.2s, transform 0.15s',
-      opacity: live ? 1 : 0.55,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 16,
-    }}
-    onMouseEnter={(e) => {
-      if (!live) return;
-      (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
-      (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
-    }}
-    onMouseLeave={(e) => {
-      (e.currentTarget as HTMLElement).style.borderColor = live ? 'var(--border-mid)' : 'var(--border)';
-      (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-    }}
+  const inner = (
+    <div
+      style={{
+        background: 'var(--surface)',
+        border: `1px solid var(--border)`,
+        borderRadius: 14,
+        overflow: 'hidden',
+        cursor: live ? 'pointer' : 'default',
+        opacity: live ? 1 : 0.5,
+        transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.15s',
+      }}
+      onMouseEnter={(e) => {
+        if (!live) return;
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = 'var(--accent)';
+        el.style.boxShadow = '0 8px 32px rgba(205,179,128,0.08)';
+        el.style.transform = 'translateY(-2px)';
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = 'var(--border)';
+        el.style.boxShadow = 'none';
+        el.style.transform = 'translateY(0)';
+      }}
     >
-      {/* Icon area */}
+      {/* Icon strip */}
       <div style={{
-        width: '100%',
-        height: 80,
+        height: 90,
         background: 'var(--surface-alt)',
-        borderRadius: 8,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        overflow: 'hidden',
+        borderBottom: '1px solid var(--border)',
       }}>
         {mod.icon}
       </div>
 
       {/* Content */}
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', letterSpacing: 0.3 }}>
+      <div style={{ padding: '18px 20px 20px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10, gap: 8 }}>
+          <span style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 16,
+            fontWeight: 700,
+            color: 'var(--text)',
+            letterSpacing: -0.2,
+            lineHeight: 1.2,
+          }}>
             {mod.label}
           </span>
           <span style={{
+            flexShrink: 0,
             fontSize: 9,
-            letterSpacing: 1,
-            padding: '2px 8px',
+            fontWeight: 600,
+            letterSpacing: 1.2,
+            padding: '3px 9px',
             borderRadius: 10,
-            background: live ? 'var(--green-dim)' : 'var(--accent-dim)',
-            color: live ? 'var(--green)' : 'var(--text-dim)',
-            border: `1px solid ${live ? 'var(--green)' : 'var(--border-mid)'}`,
+            background: live ? 'var(--green-dim)' : 'transparent',
+            color: live ? 'var(--green)' : 'var(--text-faint)',
+            border: `1px solid ${live ? 'var(--green)' : 'var(--border)'}`,
           }}>
             {live ? 'LIVE' : 'SOON'}
           </span>
@@ -166,8 +197,7 @@ function ModuleCard({ mod }: { mod: Module }) {
           margin: 0,
           fontSize: 13,
           color: 'var(--text-mid)',
-          lineHeight: 1.6,
-          fontFamily: 'system-ui, sans-serif',
+          lineHeight: 1.65,
         }}>
           {mod.tagline}
         </p>
@@ -175,41 +205,46 @@ function ModuleCard({ mod }: { mod: Module }) {
     </div>
   );
 
-  return live ? <Link to={mod.path} style={{ textDecoration: 'none' }}>{card}</Link> : card;
+  return live
+    ? <Link to={mod.path} style={{ textDecoration: 'none', display: 'block' }}>{inner}</Link>
+    : inner;
 }
 
-/* ── Decorative SVG icons ─────────────────────────────────── */
+/* ── Decorative icons ─────────────────────────────────────── */
 
 function NNIcon() {
-  const nodes = [[20,15],[20,30],[20,45],[60,20],[60,40],[100,30]];
-  const edges = [
-    [[20,15],[60,20]],[[20,15],[60,40]],
-    [[20,30],[60,20]],[[20,30],[60,40]],
-    [[20,45],[60,20]],[[20,45],[60,40]],
-    [[60,20],[100,30]],[[60,40],[100,30]],
+  const nodes: [number, number][] = [[22,15],[22,30],[22,45],[64,20],[64,40],[106,30]];
+  const edges: [[number,number],[number,number]][] = [
+    [[22,15],[64,20]],[[22,15],[64,40]],
+    [[22,30],[64,20]],[[22,30],[64,40]],
+    [[22,45],[64,20]],[[22,45],[64,40]],
+    [[64,20],[106,30]],[[64,40],[106,30]],
   ];
   return (
-    <svg width="120" height="60" viewBox="0 0 120 60">
+    <svg width="128" height="60" viewBox="0 0 128 60" fill="none">
       {edges.map(([a,b],i) => (
-        <line key={i} x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="var(--border-mid)" strokeWidth={1} opacity={0.6} />
+        <line key={i} x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="var(--border-strong)" strokeWidth={1} opacity={0.5} />
       ))}
       {nodes.map(([x,y],i) => (
-        <circle key={i} cx={x} cy={y} r={6} fill="none" stroke="var(--border-strong)" strokeWidth={1.5} />
+        <circle key={i} cx={x} cy={y} r={7} fill="var(--surface)" stroke="var(--border-strong)" strokeWidth={1.5} />
       ))}
-      <circle cx={60} cy={20} r={6} fill="var(--accent-dim)" stroke="var(--accent)" strokeWidth={1.5} />
+      <circle cx={64} cy={20} r={7} fill="var(--accent-dim)" stroke="var(--accent)" strokeWidth={1.5} />
+      <circle cx={106} cy={30} r={7} fill="var(--teal-dim)" stroke="var(--teal)" strokeWidth={1.5} />
     </svg>
   );
 }
 
 function TokenIcon() {
-  const tokens = ['The', ' quick', ' brown', ' fox'];
+  const tokens = ['The', 'quick', 'brown', 'fox'];
   const colors = ['var(--teal)', 'var(--accent)', 'var(--blue)', 'var(--orange)'];
   return (
-    <svg width="160" height="40" viewBox="0 0 160 40">
+    <svg width="180" height="44" viewBox="0 0 180 44" fill="none">
       {tokens.map((t, i) => (
         <g key={i}>
-          <rect x={4 + i * 38} y={10} width={34} height={20} rx={4} fill={colors[i]} opacity={0.15} stroke={colors[i]} strokeWidth={1} />
-          <text x={21 + i * 38} y={24} textAnchor="middle" fontSize={9} fill={colors[i]}>{t}</text>
+          <rect x={6 + i * 43} y={12} width={38} height={20} rx={5}
+            fill={colors[i]} fillOpacity={0.12} stroke={colors[i]} strokeOpacity={0.5} strokeWidth={1} />
+          <text x={25 + i * 43} y={26} textAnchor="middle" fontSize={10}
+            fill={colors[i]} fontFamily="var(--font-mono)">{t}</text>
         </g>
       ))}
     </svg>
@@ -217,25 +252,27 @@ function TokenIcon() {
 }
 
 function EmbedIcon() {
-  const pts = [[30,40],[50,20],[70,35],[90,15],[110,45],[40,50],[80,25]];
+  const pts: [number,number][] = [[30,42],[52,22],[74,36],[96,16],[118,46],[44,52],[84,26]];
   return (
-    <svg width="140" height="60" viewBox="0 0 140 60">
+    <svg width="150" height="60" viewBox="0 0 150 60" fill="none">
+      <line x1={30} y1={42} x2={52} y2={22} stroke="var(--accent)" strokeWidth={1} opacity={0.25} />
+      <line x1={52} y1={22} x2={74} y2={36} stroke="var(--accent)" strokeWidth={1} opacity={0.25} />
+      <line x1={74} y1={36} x2={96} y2={16} stroke="var(--accent)" strokeWidth={1} opacity={0.25} />
       {pts.map(([x,y], i) => (
-        <circle key={i} cx={x} cy={y} r={4} fill="var(--accent)" opacity={0.5 + i * 0.07} />
+        <circle key={i} cx={x} cy={y} r={4} fill="var(--accent)" opacity={0.45 + i * 0.08} />
       ))}
-      <line x1={30} y1={40} x2={50} y2={20} stroke="var(--accent)" strokeWidth={1} opacity={0.3} />
-      <line x1={50} y1={20} x2={70} y2={35} stroke="var(--accent)" strokeWidth={1} opacity={0.3} />
     </svg>
   );
 }
 
 function RegressionIcon() {
-  const pts = [[20,48],[35,38],[50,32],[65,25],[80,18],[95,12]];
+  const pts: [number,number][] = [[18,50],[32,42],[48,35],[66,27],[84,20],[100,13]];
   return (
-    <svg width="120" height="60" viewBox="0 0 120 60">
-      <line x1={15} y1={52} x2={105} y2={10} stroke="var(--teal)" strokeWidth={1.5} opacity={0.5} />
+    <svg width="126" height="62" viewBox="0 0 126 62" fill="none">
+      <line x1={12} y1={56} x2={114} y2={8} stroke="var(--teal)" strokeWidth={1.5} opacity={0.45} />
       {pts.map(([x,y],i) => (
-        <circle key={i} cx={x + (i%2)*6-3} cy={y + (i%3)*5-3} r={3} fill="var(--accent)" opacity={0.8} />
+        <circle key={i} cx={x + (i%2)*7-3} cy={y + (i%3)*6-3} r={3.5}
+          fill="var(--accent)" opacity={0.8} />
       ))}
     </svg>
   );
@@ -243,36 +280,33 @@ function RegressionIcon() {
 
 function ActIcon() {
   return (
-    <svg width="120" height="60" viewBox="0 0 120 60" fill="none">
-      {/* sigmoid-ish */}
-      <path d="M10 50 Q30 50 40 35 Q50 20 70 18" stroke="var(--teal)" strokeWidth={1.5} opacity={0.8} />
-      {/* relu-ish */}
-      <path d="M10 50 L50 50 L90 10" stroke="var(--accent)" strokeWidth={1.5} opacity={0.8} />
+    <svg width="130" height="62" viewBox="0 0 130 62" fill="none">
+      <path d="M8 52 Q28 52 38 36 Q48 20 68 18 Q88 16 100 16" stroke="var(--teal)" strokeWidth={1.5} opacity={0.8} />
+      <path d="M8 52 L48 52 L88 12" stroke="var(--accent)" strokeWidth={1.5} opacity={0.8} />
+      <path d="M8 32 Q28 32 38 32 Q58 32 78 14 Q88 8 108 8" stroke="var(--orange)" strokeWidth={1.2} opacity={0.6} strokeDasharray="3 2" />
     </svg>
   );
 }
 
 function AttentionIcon() {
-  const tokens = [20, 50, 80, 110];
+  const xs = [18, 54, 90, 126];
   return (
-    <svg width="130" height="60" viewBox="0 0 130 60">
-      {tokens.map((x, i) => (
-        <rect key={i} x={x-12} y={38} width={24} height={16} rx={3}
-          fill={i === 1 ? 'var(--accent-dim)' : 'var(--surface-alt)'}
+    <svg width="144" height="62" viewBox="0 0 144 62" fill="none">
+      {xs.map((x, i) => (
+        <rect key={i} x={x-14} y={38} width={28} height={18} rx={4}
+          fill={i === 1 ? 'var(--accent-dim)' : 'var(--surface)'}
           stroke={i === 1 ? 'var(--accent)' : 'var(--border-mid)'}
           strokeWidth={1}
         />
       ))}
-      {/* attention lines from token 1 */}
-      {tokens.map((x, i) => i !== 1 && (
-        <line key={i} x1={50} y1={38} x2={x} y2={38}
+      {xs.filter((_, i) => i !== 1).map((x, i) => (
+        <line key={i} x1={54} y1={38} x2={x} y2={56}
           stroke="var(--accent)" strokeWidth={1}
-          opacity={i === 0 ? 0.7 : i === 2 ? 0.4 : 0.2}
-          strokeDasharray="3 2"
-        />
+          opacity={i === 0 ? 0.7 : 0.25} strokeDasharray="3 2" />
       ))}
-      <circle cx={50} cy={20} r={8} fill="var(--accent-dim)" stroke="var(--accent)" strokeWidth={1} />
-      <text x={50} y={24} textAnchor="middle" fontSize={9} fill="var(--accent)">Q</text>
+      <circle cx={54} cy={22} r={10} fill="var(--accent-dim)" stroke="var(--accent)" strokeWidth={1} />
+      <text x={54} y={26} textAnchor="middle" fontSize={10}
+        fill="var(--accent)" fontFamily="var(--font-display)" fontWeight={700}>Q</text>
     </svg>
   );
 }
