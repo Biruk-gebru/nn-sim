@@ -25,8 +25,9 @@ export function Nav() {
         style={{
           color: isHome ? 'var(--accent)' : 'var(--text-mid)',
           textDecoration: 'none',
+          fontFamily: 'var(--font-display)',
           fontSize: 14,
-          fontWeight: 600,
+          fontWeight: 700,
           letterSpacing: 1.5,
           transition: 'color 0.15s',
         }}

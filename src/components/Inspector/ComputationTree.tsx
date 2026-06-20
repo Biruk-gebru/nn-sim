@@ -14,7 +14,7 @@ function signedBar(value: number, maxAbs: number) {
       <div style={{ width: BAR_MAX_W, background: 'var(--deep)', borderRadius: 2, height: 6, flexShrink: 0 }}>
         <div style={{ width: w, height: 6, background: color, borderRadius: 2, opacity: 0.85 }} />
       </div>
-      <span style={{ color, fontFamily: 'ui-monospace, monospace', fontSize: 11, minWidth: 60 }}>
+      <span style={{ color, fontFamily: 'var(--font-mono)', fontSize: 11, minWidth: 60 }}>
         {value >= 0 ? '+' : ''}{value.toFixed(4)}
       </span>
     </div>
@@ -57,7 +57,7 @@ export function ComputationTree({ trace, act }: Props) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: 10, color: 'var(--text-dim)' }}>z = Σ(w·x) + bias</span>
           <span style={{
-            fontFamily: 'ui-monospace, monospace',
+            fontFamily: 'var(--font-mono)',
             fontSize: 12,
             color: 'var(--orange)',
             background: 'var(--orange-dim)',
@@ -84,7 +84,7 @@ export function ComputationTree({ trace, act }: Props) {
           </div>
         </div>
         <div style={{ fontSize: 10, color: 'var(--text-dim)' }}>→</div>
-        <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 14, color: 'var(--teal)', fontWeight: 600 }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--teal)', fontWeight: 600 }}>
           {trace.postActivation.toFixed(5)}
         </div>
       </div>
@@ -99,7 +99,7 @@ export function ComputationTree({ trace, act }: Props) {
           padding: '6px 12px',
         }}>
           <span style={{ fontSize: 10, color: 'var(--red)' }}>δ gradient</span>
-          <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 12, color: 'var(--red)' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--red)' }}>
             {trace.delta >= 0 ? '+' : ''}{trace.delta.toFixed(6)}
           </span>
         </div>

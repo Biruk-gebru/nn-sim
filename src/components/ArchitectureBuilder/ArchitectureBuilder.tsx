@@ -101,7 +101,7 @@ function Badge({ children }: { children: React.ReactNode }) {
     <span style={{
       background: 'var(--surface)', border: '1px solid var(--border-mid)',
       borderRadius: 4, padding: '2px 10px', color: 'var(--text)', minWidth: 28, textAlign: 'center',
-      fontFamily: 'ui-monospace, monospace',
+      fontFamily: 'var(--font-mono)',
     }}>
       {children}
     </span>

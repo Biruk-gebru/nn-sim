@@ -1,38 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  /* Backgrounds */
-  --bg:           #031634;
-  --surface:      #042445;
-  --surface-alt:  #033649;
-  --deep:         #021228;
+  /* Palette #0013: warm cream × dark brown × lime */
 
-  /* Borders */
-  --border:       rgba(3, 101, 100, 0.35);
-  --border-mid:   #036564;
-  --border-strong:#0a8a88;
+  /* Backgrounds — warm dark brown scale */
+  --bg:           #1c140d;
+  --surface:      #241b12;
+  --surface-alt:  #2e2418;
+  --deep:         #130e08;
 
-  /* Text */
-  --text:         #e8ddcb;
-  --text-mid:     #b0a07a;
-  --text-dim:     #607060;
-  --text-faint:   #2e4040;
+  /* Borders — warm cream-tinted */
+  --border:       rgba(242, 233, 225, 0.08);
+  --border-mid:   rgba(242, 233, 225, 0.20);
+  --border-strong:rgba(242, 233, 225, 0.38);
 
-  /* Accents */
-  --accent:       #cdb380;
-  --accent-dim:   rgba(205, 179, 128, 0.13);
-  --accent-hover: #e8ddcb;
+  /* Text — warm cream scale */
+  --text:         #f2e9e1;
+  --text-mid:     #b8a882;
+  --text-dim:     #6a5840;
+  --text-faint:   #3a2a1a;
 
-  /* Animation / functional */
-  --teal:         #4ecdc4;
-  --teal-dim:     rgba(78, 205, 196, 0.13);
-  --red:          #c44d58;
-  --red-dim:      rgba(196, 77, 88, 0.13);
-  --orange:       #d4943a;
-  --orange-dim:   rgba(212, 148, 58, 0.13);
-  --blue:         #5b8fa6;
-  --green:        #7ab88a;
-  --green-dim:    rgba(122, 184, 138, 0.13);
+  /* Accent — lime (palette hero) */
+  --accent:       #cbe86b;
+  --accent-dim:   rgba(203, 232, 107, 0.13);
+  --accent-hover: #d9f07d;
+
+  /* Functional — warm-synchronized */
+  --teal:         #78d4a8;   /* warm mint  — forward signal  */
+  --teal-dim:     rgba(120, 212, 168, 0.13);
+  --red:          #e0623a;   /* warm coral — backprop        */
+  --red-dim:      rgba(224, 98, 58, 0.13);
+  --orange:       #d49a3a;   /* warm amber — positive weight */
+  --orange-dim:   rgba(212, 154, 58, 0.13);
+  --blue:         #6aace0;   /* sky blue   — negative weight */
+  --green:        #a0c84a;   /* lime-adj   — correct preds   */
+  --green-dim:    rgba(160, 200, 74, 0.13);
+
+  /* Typography */
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
 }
 
 * { box-sizing: border-box; }
@@ -41,7 +48,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: ui-monospace, Consolas, monospace;
+  font-family: var(--font-body);
 }
 
 #root {
@@ -51,7 +58,6 @@ body {
   flex-direction: column;
 }
 
-/* Shared scrollbar styling */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 3px; }

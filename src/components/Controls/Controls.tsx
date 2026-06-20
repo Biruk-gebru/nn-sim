@@ -45,7 +45,7 @@ export function Controls() {
                 padding: '3px 9px',
                 fontSize: 11,
                 cursor: 'pointer',
-                fontFamily: 'ui-monospace, monospace',
+                fontFamily: 'var(--font-mono)',
                 letterSpacing: 0.5,
                 transition: 'all 0.15s',
                 boxShadow: dataset === d ? '0 0 8px rgba(205,179,128,0.15)' : 'none',
@@ -88,7 +88,7 @@ export function Controls() {
             </span>
           )}
           <span style={{ fontSize: 12, color: 'var(--text-dim)' }}>
-            Epoch <span style={{ color: 'var(--accent)', fontFamily: 'ui-monospace, monospace' }}>{currentEpoch}</span>
+            Epoch <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>{currentEpoch}</span>
           </span>
         </div>
       </div>
@@ -112,7 +112,7 @@ function SliderRow({ label, min, max, step, value, display, color, onChange }: {
         onChange={(e) => onChange(parseFloat(e.target.value))}
         style={{ width: 78, accentColor: color }}
       />
-      <span style={{ fontSize: 11, color: 'var(--text-mid)', width: 36, fontFamily: 'ui-monospace, monospace' }}>
+      <span style={{ fontSize: 11, color: 'var(--text-mid)', width: 36, fontFamily: 'var(--font-mono)' }}>
         {display}
       </span>
     </div>
@@ -136,7 +136,7 @@ function Btn({ label, onClick, disabled, color, active }: {
         cursor: disabled ? 'not-allowed' : 'pointer',
         transition: 'background 0.15s',
         letterSpacing: 0.5,
-        fontFamily: 'ui-monospace, monospace',
+        fontFamily: 'var(--font-mono)',
       }}
       onMouseEnter={(e) => { if (!disabled) (e.currentTarget as HTMLElement).style.background = 'var(--accent-dim)'; }}
       onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}

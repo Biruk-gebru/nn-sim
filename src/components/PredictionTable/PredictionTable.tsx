@@ -43,7 +43,7 @@ export function PredictionTable() {
               <td style={{
                 textAlign: 'center', padding: '4px 0',
                 color: correct ? 'var(--green)' : 'var(--red)',
-                fontFamily: 'ui-monospace, monospace',
+                fontFamily: 'var(--font-mono)',
               }}>
                 {pred.toFixed(2)}
               </td>

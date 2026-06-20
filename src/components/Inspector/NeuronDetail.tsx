@@ -33,7 +33,7 @@ export function NeuronDetail() {
         </span>
       </div>
 
-      <div style={{ fontSize: 13, color: 'var(--text-mid)', lineHeight: 1.65, fontFamily: 'system-ui, sans-serif' }}>
+      <div style={{ fontSize: 13, color: 'var(--text-mid)', lineHeight: 1.65 }}>
         {act?.explanation ?? ''}
       </div>
 
