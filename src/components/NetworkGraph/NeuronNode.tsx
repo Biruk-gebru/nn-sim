@@ -3,13 +3,13 @@ import { useSimStore } from '../../store/useSimStore';
 import type { AnimPhase } from '../../store/useSimStore';
 import type { NeuronPos } from './NetworkGraph';
 
+// 0 → surface-alt (#2e2418), 1 → warm mint (#78d4a8)
 function activationToColor(a: number | null): string {
-  if (a === null) return '#033649';
+  if (a === null) return '#2e2418';
   const t = Math.max(0, Math.min(1, a));
-  // dark teal (#033649) → bright teal (#4ecdc4)
-  const r = Math.round(3   + t * (78  - 3));
-  const g = Math.round(54  + t * (205 - 54));
-  const b = Math.round(73  + t * (196 - 73));
+  const r = Math.round(46  + t * (120 - 46));
+  const g = Math.round(36  + t * (212 - 36));
+  const b = Math.round(24  + t * (168 - 24));
   return `rgb(${r},${g},${b})`;
 }
 
@@ -31,8 +31,8 @@ export function NeuronNode({ pos, radius, postActivation, delta, animPhase, anim
   const isFlashing = animWaveIdx === pos.layer - 1;
 
   const fill = activationToColor(postActivation);
-  // glow shifts from slate-blue (low) to teal (high)
-  const glowColor = postActivation !== null && postActivation > 0.5 ? '#4ecdc4' : '#5b8fa6';
+  // glow: warm mint (high) or sky blue (low)
+  const glowColor = postActivation !== null && postActivation > 0.5 ? '#78d4a8' : '#6aace0';
   const glowStrength = postActivation !== null ? Math.round(postActivation * 14) : 2;
 
   const handleClick = () => {
@@ -48,8 +48,8 @@ export function NeuronNode({ pos, radius, postActivation, delta, animPhase, anim
       ? postActivation.toFixed(3)
       : '';
 
-  // text color: dark on bright teal fill, light on dark fill
-  const textColor = postActivation !== null && postActivation > 0.6 ? '#031634' : '#b0a07a';
+  // dark brown on bright mint fill, warm cream on dark fill
+  const textColor = postActivation !== null && postActivation > 0.6 ? '#1c140d' : '#b8a882';
 
   return (
     <g
@@ -59,7 +59,7 @@ export function NeuronNode({ pos, radius, postActivation, delta, animPhase, anim
       style={{ cursor: isInput ? 'crosshair' : 'pointer' }}
     >
       {isSelected && (
-        <circle cx={pos.x} cy={pos.y} r={radius + 6} fill="none" stroke="#cdb380" strokeWidth={2} opacity={0.6} />
+        <circle cx={pos.x} cy={pos.y} r={radius + 6} fill="none" stroke="#cbe86b" strokeWidth={2} opacity={0.6} />
       )}
       <circle cx={pos.x} cy={pos.y} r={radius + 10} fill="transparent" />
 
@@ -68,7 +68,7 @@ export function NeuronNode({ pos, radius, postActivation, delta, animPhase, anim
         cy={pos.y}
         r={radius}
         fill={fill}
-        stroke={isSelected ? '#cdb380' : '#036564'}
+        stroke={isSelected ? '#cbe86b' : 'rgba(242,233,225,0.18)'}
         strokeWidth={isSelected ? 2 : 1}
         style={{ filter: `drop-shadow(0 0 ${glowStrength}px ${glowColor})`, transition: 'fill 0.4s' }}
         animate={isFlashing ? { scale: [1, 1.15, 1] } : { scale: 1 }}
