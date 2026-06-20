@@ -33,7 +33,7 @@ export function LossChart() {
   return (
     <div style={{ padding: '6px 0' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-        <span style={{ fontSize: 10, color: 'var(--text-dim)', letterSpacing: 1 }}>LOSS</span>
+        <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>loss</span>
         <span style={{ fontSize: 12, color: 'var(--orange)', fontFamily: 'var(--font-mono)' }}>
           {currentLoss.toFixed(5)}
         </span>

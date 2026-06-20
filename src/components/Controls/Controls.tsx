@@ -46,9 +46,7 @@ export function Controls() {
                 fontSize: 11,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-mono)',
-                letterSpacing: 0.5,
-                transition: 'all 0.15s',
-                boxShadow: dataset === d ? '0 0 8px rgba(205,179,128,0.15)' : 'none',
+                transition: 'color 0.15s, background 0.15s',
               }}
             >
               {d}
@@ -80,11 +78,10 @@ export function Controls() {
           {isConverged && (
             <span style={{
               fontSize: 10, color: 'var(--green)',
-              background: 'var(--green-dim)',
-              border: '1px solid var(--green)',
-              borderRadius: 4, padding: '2px 8px', letterSpacing: 0.5,
+              fontWeight: 700, letterSpacing: 1,
+              fontFamily: 'var(--font-mono)',
             }}>
-              CONVERGED
+              ✓ CONVERGED
             </span>
           )}
           <span style={{ fontSize: 12, color: 'var(--text-dim)' }}>
@@ -126,6 +123,7 @@ function Btn({ label, onClick, disabled, color, active }: {
     <button
       onClick={onClick}
       disabled={disabled}
+      className="ctrl-btn"
       style={{
         background: active ? 'var(--accent-dim)' : 'transparent',
         border: `1px solid ${disabled ? 'var(--text-faint)' : color}`,
@@ -134,12 +132,8 @@ function Btn({ label, onClick, disabled, color, active }: {
         padding: '4px 11px',
         fontSize: 11,
         cursor: disabled ? 'not-allowed' : 'pointer',
-        transition: 'background 0.15s',
-        letterSpacing: 0.5,
         fontFamily: 'var(--font-mono)',
       }}
-      onMouseEnter={(e) => { if (!disabled) (e.currentTarget as HTMLElement).style.background = 'var(--accent-dim)'; }}
-      onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
     >
       {label}
     </button>

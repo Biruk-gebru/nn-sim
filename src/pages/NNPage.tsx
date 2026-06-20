@@ -34,19 +34,15 @@ export function NNPage() {
         </span>
         {isConverged && (
           <span style={{
-            fontSize: 10,
-            color: 'var(--green)',
-            background: 'var(--green-dim)',
-            border: '1px solid var(--green)',
-            borderRadius: 4,
-            padding: '1px 7px',
-            letterSpacing: 0.5,
+            fontSize: 10, color: 'var(--green)',
+            fontWeight: 700, letterSpacing: 1,
+            fontFamily: 'var(--font-mono)',
           }}>
-            CONVERGED
+            ✓ CONVERGED
           </span>
         )}
-        <span style={{ marginLeft: 'auto', fontSize: 10, color: 'var(--text-faint)' }}>
-          Click any hidden or output neuron to inspect
+        <span style={{ marginLeft: 'auto', fontSize: 10, color: 'var(--text-dim)' }}>
+          Click a neuron to inspect
         </span>
       </div>
 
@@ -79,10 +75,8 @@ export function NNPage() {
           background: 'var(--surface)',
         }}>
           <LossChart />
-          <Divider />
           <TruthTable />
           <PredictionTable />
-          <Divider />
           <Legend />
         </div>
 
@@ -94,18 +88,14 @@ export function NNPage() {
   );
 }
 
-function Divider() {
-  return <div style={{ height: 1, background: 'var(--border)', flexShrink: 0 }} />;
-}
-
 function TruthTable() {
   const { dataset } = useSimStore();
   const samples = DATASETS[dataset];
 
   return (
     <div>
-      <div style={{ fontSize: 10, color: 'var(--text-dim)', marginBottom: 8, letterSpacing: 1 }}>
-        {dataset} TRUTH TABLE
+      <div style={{ fontSize: 11, color: 'var(--text-dim)', marginBottom: 8 }}>
+        {dataset} truth table
       </div>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
         <thead>
@@ -134,7 +124,7 @@ function TruthTable() {
 function Legend() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-      <div style={{ fontSize: 10, color: 'var(--text-dim)', letterSpacing: 1 }}>LEGEND</div>
+      <div style={{ fontSize: 11, color: 'var(--text-dim)' }}>legend</div>
       <LegendRow color="var(--teal)" label="Forward signal" />
       <LegendRow color="var(--red)" label="Gradient (backprop)" />
       <LegendRow color="var(--blue)" label="Negative weight" />

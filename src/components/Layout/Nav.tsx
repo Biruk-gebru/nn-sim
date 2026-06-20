@@ -37,23 +37,19 @@ export function Nav() {
 
       <div style={{ width: 1, height: 20, background: 'var(--border-mid)', opacity: 0.4 }} />
 
-      <div style={{ display: 'flex', gap: 4 }}>
+      <div style={{ display: 'flex', gap: 8 }}>
         {MODULES.map(({ path, label }) => {
           const active = location.pathname === path;
           return (
             <Link
               key={path}
               to={path}
+              className="nav-link"
               style={{
                 color: active ? 'var(--accent)' : 'var(--text-dim)',
                 textDecoration: 'none',
                 fontSize: 12,
-                padding: '4px 12px',
-                borderRadius: 5,
-                background: active ? 'var(--accent-dim)' : 'transparent',
-                border: `1px solid ${active ? 'var(--accent)' : 'transparent'}`,
-                transition: 'all 0.15s',
-                letterSpacing: 0.5,
+                fontWeight: active ? 600 : 400,
               }}
             >
               {label}
@@ -62,8 +58,8 @@ export function Nav() {
         })}
       </div>
 
-      <div style={{ marginLeft: 'auto', fontSize: 10, color: 'var(--text-faint)', letterSpacing: 1 }}>
-        INTERACTIVE ML DEMOS
+      <div style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-faint)' }}>
+        interactive ml demos
       </div>
     </nav>
   );

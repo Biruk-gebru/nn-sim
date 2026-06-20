@@ -17,19 +17,15 @@ export function NeuronDetail() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-        <div style={{
-          background: 'var(--accent-dim)',
-          border: '1px solid var(--accent)',
-          borderRadius: 5,
-          padding: '3px 10px',
-          fontSize: 11,
-          color: 'var(--accent)',
-          letterSpacing: 0.5,
+        <span style={{
+          fontSize: 12, color: 'var(--accent)',
+          fontWeight: 700, letterSpacing: 0.5,
+          fontFamily: 'var(--font-mono)',
         }}>
           {act?.name ?? 'Linear'}
-        </div>
+        </span>
         <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>
-          {isOutput ? 'Output' : 'Hidden'} L{layer}·N{neuron + 1}
+          {isOutput ? 'Output' : 'Hidden'} · L{layer} N{neuron + 1}
         </span>
       </div>
 
@@ -50,8 +46,8 @@ export function NeuronDetail() {
       <div style={{ height: 1, background: 'var(--border)' }} />
 
       <div>
-        <div style={{ fontSize: 10, color: 'var(--text-dim)', marginBottom: 8, letterSpacing: 1 }}>
-          OUTPUT ACTIVATION · EPOCH HISTORY
+        <div style={{ fontSize: 11, color: 'var(--text-dim)', marginBottom: 8 }}>
+          activation history
         </div>
         <ValueSparkline values={activationHistory} />
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>

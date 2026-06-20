@@ -17,8 +17,8 @@
   /* Text — warm cream scale */
   --text:         #f2e9e1;
   --text-mid:     #b8a882;
-  --text-dim:     #6a5840;
-  --text-faint:   #3a2a1a;
+  --text-dim:     #9a7e60;
+  --text-faint:   #6a5440;
 
   /* Accent — lime (palette hero) */
   --accent:       #cbe86b;
@@ -61,3 +61,17 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 3px; }
+
+/* CSS hover — replaces JS onMouseEnter/onMouseLeave handlers */
+.module-card {
+  transition: border-color 0.2s, box-shadow 0.18s, transform 0.18s;
+}
+.module-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 24px rgba(203, 232, 107, 0.07);
+  transform: translateY(-2px);
+}
+.ctrl-btn:hover:not(:disabled) { background: var(--accent-dim) !important; }
+.canvas-btn:hover { color: var(--accent) !important; border-color: var(--accent) !important; }
+.nav-link:hover { color: var(--accent) !important; }
+.inspector-close:hover { color: var(--text) !important; }

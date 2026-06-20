@@ -38,8 +38,8 @@ export function ComputationTree({ trace, act }: Props) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-      <div style={{ fontSize: 10, color: 'var(--text-dim)', letterSpacing: 1, marginBottom: 10 }}>
-        COMPUTATION BREAKDOWN
+      <div style={{ fontSize: 11, color: 'var(--text-dim)', marginBottom: 10 }}>
+        computation breakdown
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

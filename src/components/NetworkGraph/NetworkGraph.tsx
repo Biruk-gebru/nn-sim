@@ -256,16 +256,7 @@ function CanvasBtn({ onClick, children, title }: { onClick: () => void; children
     <button
       onClick={onClick}
       title={title}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.color = 'var(--accent)';
-        el.style.borderColor = 'var(--accent)';
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.color = 'var(--text-dim)';
-        el.style.borderColor = 'var(--border-mid)';
-      }}
+      className="canvas-btn"
       style={{
         background: 'var(--surface)',
         border: '1px solid var(--border-mid)',

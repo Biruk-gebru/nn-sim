@@ -66,19 +66,10 @@ export function Landing() {
         borderBottom: '1px solid var(--border)',
         maxWidth: 1200,
       }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 8,
-          background: 'var(--surface)',
-          border: '1px solid var(--border-mid)',
-          borderRadius: 20,
-          padding: '4px 14px',
-          marginBottom: 28,
-        }}>
-          <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)' }} />
-          <span style={{ fontSize: 11, color: 'var(--text-dim)', letterSpacing: 1.2, fontWeight: 500 }}>
-            INTERACTIVE ML DEMOS
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 28 }}>
+          <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }} />
+          <span style={{ fontSize: 12, color: 'var(--text-dim)', fontWeight: 500 }}>
+            Interactive ML demos
           </span>
         </div>
 
@@ -131,27 +122,14 @@ function ModuleCard({ mod }: { mod: Module }) {
 
   const inner = (
     <div
+      className={live ? 'module-card' : undefined}
       style={{
         background: 'var(--surface)',
-        border: `1px solid var(--border)`,
         borderRadius: 14,
         overflow: 'hidden',
         cursor: live ? 'pointer' : 'default',
         opacity: live ? 1 : 0.5,
-        transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.15s',
-      }}
-      onMouseEnter={(e) => {
-        if (!live) return;
-        const el = e.currentTarget as HTMLElement;
-        el.style.borderColor = 'var(--accent)';
-        el.style.boxShadow = '0 8px 32px rgba(205,179,128,0.08)';
-        el.style.transform = 'translateY(-2px)';
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.borderColor = 'var(--border)';
-        el.style.boxShadow = 'none';
-        el.style.transform = 'translateY(0)';
+        border: '1px solid var(--border)',
       }}
     >
       {/* Icon strip */}
@@ -181,16 +159,11 @@ function ModuleCard({ mod }: { mod: Module }) {
           </span>
           <span style={{
             flexShrink: 0,
-            fontSize: 9,
+            fontSize: 10,
             fontWeight: 600,
-            letterSpacing: 1.2,
-            padding: '3px 9px',
-            borderRadius: 10,
-            background: live ? 'var(--green-dim)' : 'transparent',
             color: live ? 'var(--green)' : 'var(--text-faint)',
-            border: `1px solid ${live ? 'var(--green)' : 'var(--border)'}`,
           }}>
-            {live ? 'LIVE' : 'SOON'}
+            {live ? 'live' : 'soon'}
           </span>
         </div>
         <p style={{

@@ -17,10 +17,10 @@ export function PredictionTable() {
   return (
     <div>
       <div style={{
-        fontSize: 10, color: 'var(--text-dim)', marginBottom: 8, letterSpacing: 1,
+        fontSize: 11, color: 'var(--text-dim)', marginBottom: 8,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
-        <span>PREDICTIONS</span>
+        <span style={{ fontSize: 11 }}>predictions</span>
         {allCorrect && <span style={{ color: 'var(--green)' }}>ALL ✓</span>}
       </div>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
