@@ -7,6 +7,7 @@ export function useStepTraining() {
 
   const stepOnce = useCallback(async () => {
     const state = useSimStore.getState();
+    if (state.isConverged) return;
     const samples = DATASETS[state.dataset];
     const snap = state.net.stepEpoch(samples, state.currentEpoch + 1);
     state.commitSnapshot(snap);

@@ -11,8 +11,9 @@ export function usePlayLoop() {
     let alive = true;
 
     const loop = async () => {
-      while (alive && useSimStore.getState().isPlaying) {
+      while (alive) {
         const state = useSimStore.getState();
+        if (!state.isPlaying || state.isConverged) break;
         const samples = DATASETS[state.dataset];
         const snap = state.net.stepEpoch(samples, state.currentEpoch + 1);
         state.commitSnapshot(snap);

@@ -13,10 +13,10 @@ export function useAnimation() {
   const run = useCallback(async () => {
     cancelRef.current = false;
     const speed = () => useSimStore.getState().speedMultiplier;
+    const waveCount = useSimStore.getState().architecture.length - 1;
 
-    // Forward pass: wave 0 = layer 0→1, wave 1 = layer 1→2
     useSimStore.getState().setAnimPhase('forward');
-    for (let wave = 0; wave < 2; wave++) {
+    for (let wave = 0; wave < waveCount; wave++) {
       if (cancelRef.current) return;
       useSimStore.getState().setAnimWaveIdx(wave);
       await delay(BASE_PULSE_MS / speed());
@@ -26,9 +26,8 @@ export function useAnimation() {
 
     await delay(200 / speed());
 
-    // Backward pass: wave 1 (layer 1→2) then wave 0 (layer 0→1) — reversed
     useSimStore.getState().setAnimPhase('backward');
-    for (let wave = 1; wave >= 0; wave--) {
+    for (let wave = waveCount - 1; wave >= 0; wave--) {
       if (cancelRef.current) return;
       useSimStore.getState().setAnimWaveIdx(wave);
       await delay(BASE_PULSE_MS / speed());
