@@ -1,4 +1,4 @@
-export type DatasetName = 'XOR' | 'AND' | 'OR';
+export type DatasetName = 'XOR' | 'AND' | 'OR' | 'NAND' | 'XNOR';
 
 export interface Sample {
   input: number[];
@@ -22,6 +22,18 @@ export const DATASETS: Record<DatasetName, Sample[]> = {
     { input: [0, 0], target: [0] },
     { input: [0, 1], target: [1] },
     { input: [1, 0], target: [1] },
+    { input: [1, 1], target: [1] },
+  ],
+  NAND: [
+    { input: [0, 0], target: [1] },
+    { input: [0, 1], target: [1] },
+    { input: [1, 0], target: [1] },
+    { input: [1, 1], target: [0] },
+  ],
+  XNOR: [
+    { input: [0, 0], target: [1] },
+    { input: [0, 1], target: [0] },
+    { input: [1, 0], target: [0] },
     { input: [1, 1], target: [1] },
   ],
 };

@@ -6,6 +6,8 @@ export interface ActivationFn {
   explanation: string;
 }
 
+export type ActivationName = 'sigmoid' | 'relu' | 'tanh';
+
 export const linear: ActivationFn = {
   name: 'Linear',
   fn: (x) => x,
@@ -42,4 +44,10 @@ export const tanh: ActivationFn = {
   formulaHtml: 'f(x) = tanh(x)',
   explanation:
     'Like sigmoid but ranges from −1 to 1. Negative inputs produce negative outputs, which helps the network express more nuanced patterns.',
+};
+
+export const ACTIVATION_MAP: Record<ActivationName, ActivationFn> = {
+  sigmoid,
+  relu,
+  tanh,
 };

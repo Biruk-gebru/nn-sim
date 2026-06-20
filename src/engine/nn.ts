@@ -103,6 +103,19 @@ export class NeuralNet {
     }
   }
 
+  predict(input: number[]): number[] {
+    let acts = input;
+    for (let l = 0; l < this.weights.length; l++) {
+      const next: number[] = [];
+      for (let j = 0; j < this.weights[l].length; j++) {
+        const z = this.weights[l][j].reduce((s, w, k) => s + w * acts[k], 0) + this.biases[l][j];
+        next.push(this.activations[l + 1].fn(z));
+      }
+      acts = next;
+    }
+    return acts;
+  }
+
   stepEpoch(samples: { input: number[]; target: number[] }[], epochIdx: number): EpochSnapshot {
     const weightGrads: number[][][] = this.weights.map((layer) =>
       layer.map((row) => row.map(() => 0))
