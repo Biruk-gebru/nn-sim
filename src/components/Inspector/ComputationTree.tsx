@@ -24,6 +24,19 @@ function signedBar(value: number, maxAbs: number) {
   );
 }
 
+// Render formulaHtml safely by parsing the known <sup> pattern
+function FormulaText({ html }: { html: string }) {
+  const parts = html.split(/(<sup>[^<]*<\/sup>)/g);
+  return (
+    <>
+      {parts.map((part, i) => {
+        const match = part.match(/^<sup>(.*)<\/sup>$/);
+        return match ? <sup key={i}>{match[1]}</sup> : <span key={i}>{part}</span>;
+      })}
+    </>
+  );
+}
+
 export function ComputationTree({ trace, act }: Props) {
   const maxAbs = Math.max(...trace.inputs.map(Math.abs), 0.001);
   const sum = trace.preActivation;
@@ -34,7 +47,6 @@ export function ComputationTree({ trace, act }: Props) {
         COMPUTATION BREAKDOWN
       </div>
 
-      {/* Weighted inputs */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {trace.inputs.map((val, i) => (
           <div key={i}>
@@ -46,7 +58,6 @@ export function ComputationTree({ trace, act }: Props) {
         ))}
       </div>
 
-      {/* Separator + sum */}
       <div style={{ margin: '12px 0 8px', borderTop: '1px solid #1e1e2e', paddingTop: 10 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: 10, color: '#606070' }}>
@@ -66,7 +77,6 @@ export function ComputationTree({ trace, act }: Props) {
         </div>
       </div>
 
-      {/* Activation arrow */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -80,10 +90,9 @@ export function ComputationTree({ trace, act }: Props) {
           <div style={{ fontSize: 10, color: '#606070', marginBottom: 2 }}>
             {act.name}(z)
           </div>
-          <div
-            style={{ fontSize: 11, color: '#9090a0', fontFamily: 'serif' }}
-            dangerouslySetInnerHTML={{ __html: act.formulaHtml }}
-          />
+          <div style={{ fontSize: 11, color: '#9090a0', fontFamily: 'serif' }}>
+            <FormulaText html={act.formulaHtml} />
+          </div>
         </div>
         <div style={{ fontSize: 10, color: '#606070' }}>→</div>
         <div style={{
@@ -96,7 +105,6 @@ export function ComputationTree({ trace, act }: Props) {
         </div>
       </div>
 
-      {/* Gradient row (only if backprop ran) */}
       {trace.delta !== 0 && (
         <div style={{
           marginTop: 8,

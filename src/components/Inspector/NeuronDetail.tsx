@@ -1,21 +1,21 @@
-import { useSimStore, ACTIVATIONS, ARCHITECTURE } from '../../store/useSimStore';
+import { useSimStore } from '../../store/useSimStore';
+import { ACTIVATION_MAP } from '../../engine/activations';
 import { ValueSparkline } from './ValueSparkline';
 import { ComputationTree } from './ComputationTree';
 
 export function NeuronDetail() {
-  const { selectedNeuron, history, currentEpoch } = useSimStore();
+  const { selectedNeuron, history, currentEpoch, architecture, activationNames } = useSimStore();
   if (!selectedNeuron) return null;
 
   const { layer, neuron } = selectedNeuron;
   const snap = history[currentEpoch - 1];
   const trace = snap?.neurons[layer]?.[neuron];
-  const act = ACTIVATIONS[layer - 1];
-  const isOutput = layer === ARCHITECTURE.length - 1;
+  const act = ACTIVATION_MAP[activationNames[layer - 1]];
+  const isOutput = layer === architecture.length - 1;
   const activationHistory = history.map((s) => s.neurons[layer]?.[neuron]?.postActivation ?? 0);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-      {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
         <div style={{
           background: '#00f5ff22',
@@ -33,15 +33,12 @@ export function NeuronDetail() {
         </span>
       </div>
 
-      {/* Plain-English explanation */}
       <div style={{ fontSize: 13, color: '#9090a0', lineHeight: 1.65 }}>
         {act?.explanation ?? ''}
       </div>
 
-      {/* Divider */}
       <div style={{ borderTop: '1px solid #1e1e2e' }} />
 
-      {/* Computation tree */}
       {trace && act ? (
         <ComputationTree trace={trace} act={act} />
       ) : (
@@ -50,10 +47,8 @@ export function NeuronDetail() {
         </div>
       )}
 
-      {/* Divider */}
       <div style={{ borderTop: '1px solid #1e1e2e' }} />
 
-      {/* Sparkline */}
       <div>
         <div style={{ fontSize: 10, color: '#606070', marginBottom: 8, letterSpacing: 1 }}>
           OUTPUT ACTIVATION · EPOCH HISTORY
