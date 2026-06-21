@@ -107,7 +107,7 @@ export function Landing() {
             {[
               { n: '6', label: 'modules' },
               { n: '100%', label: 'in-browser' },
-              { n: '0', label: 'installations' },
+              { n: '0', label: 'sign-ups' },
             ].map(({ n, label }) => (
               <div key={label}>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 700, color: 'var(--text)', display: 'block', lineHeight: 1 }}>{n}</span>
@@ -116,32 +116,52 @@ export function Landing() {
             ))}
           </div>
 
-          <Link to="/nn" style={{
-            display: 'inline-block',
-            padding: '9px 22px',
-            background: 'var(--accent)',
-            color: '#1c140d',
-            borderRadius: 6,
-            fontFamily: 'var(--font-mono)',
-            fontSize: 13,
-            fontWeight: 700,
-            textDecoration: 'none',
-          }}>
-            Start with Neural Network
-          </Link>
+          <div>
+            <Link to="/nn" style={{
+              display: 'inline-block',
+              padding: '9px 22px',
+              background: 'var(--accent)',
+              color: '#1c140d',
+              borderRadius: 6,
+              fontFamily: 'var(--font-mono)',
+              fontSize: 13,
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}>
+              Get started
+            </Link>
+            <p style={{
+              margin: '10px 0 0',
+              fontSize: 12,
+              color: 'var(--text-faint)',
+              fontFamily: 'var(--font-mono)',
+              maxWidth: 380,
+              lineHeight: 1.6,
+            }}>
+              The neural network is the best starting point, covering the core concepts every other module builds on.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Module grid */}
       <div style={{ padding: '48px 56px 80px' }}>
+        <p style={{
+          margin: '0 0 24px',
+          fontFamily: 'var(--font-mono)',
+          fontSize: 11,
+          color: 'var(--text-faint)',
+        }}>
+          pick a module
+        </p>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
           gap: 16,
           maxWidth: 1100,
         }}>
-          {MODULES.map((mod) => (
-            <ModuleCard key={mod.path} mod={mod} />
+          {MODULES.map((mod, i) => (
+            <ModuleCard key={mod.path} mod={mod} featured={i === 0} />
           ))}
         </div>
       </div>
@@ -149,7 +169,7 @@ export function Landing() {
   );
 }
 
-function ModuleCard({ mod }: { mod: Module }) {
+function ModuleCard({ mod, featured }: { mod: Module; featured?: boolean }) {
   const live = mod.status === 'live';
 
   const inner = (
@@ -161,23 +181,28 @@ function ModuleCard({ mod }: { mod: Module }) {
         overflow: 'hidden',
         cursor: live ? 'pointer' : 'default',
         opacity: live ? 1 : 0.5,
-        border: '1px solid var(--border)',
+        border: featured ? '1px solid var(--border-mid)' : '1px solid var(--border)',
       }}
     >
       {/* Icon strip */}
       <div style={{
         height: 90,
-        background: 'var(--surface-alt)',
+        background: featured ? 'rgba(203, 232, 107, 0.03)' : 'var(--surface-alt)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottom: '1px solid var(--border)',
+        borderBottom: featured ? '1px solid var(--border-mid)' : '1px solid var(--border)',
       }}>
         {mod.icon}
       </div>
 
       {/* Content */}
       <div style={{ padding: '18px 20px 20px' }}>
+        {featured && (
+          <p style={{ margin: '0 0 6px', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--accent)' }}>
+            start here
+          </p>
+        )}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10, gap: 8 }}>
           <span style={{
             fontFamily: 'var(--font-display)',
@@ -188,14 +213,11 @@ function ModuleCard({ mod }: { mod: Module }) {
           }}>
             {mod.label}
           </span>
-          <span style={{
-            flexShrink: 0,
-            fontSize: 10,
-            fontWeight: 600,
-            color: live ? 'var(--green)' : 'var(--text-faint)',
-          }}>
-            {live ? 'live' : 'soon'}
-          </span>
+          {!live && (
+            <span style={{ flexShrink: 0, fontSize: 10, fontWeight: 600, color: 'var(--text-faint)' }}>
+              soon
+            </span>
+          )}
         </div>
         <p style={{
           margin: 0,
@@ -246,7 +268,7 @@ function HeroBg() {
         right: 0, top: '50%',
         transform: 'translateY(-50%)',
         width: '58%', height: '150%',
-        opacity: 0.07,
+        opacity: 0.13,
         pointerEvents: 'none',
         zIndex: 0,
       }}
@@ -276,7 +298,7 @@ function NNIcon() {
   return (
     <svg width="128" height="60" viewBox="0 0 128 60" fill="none">
       {edges.map(([a,b],i) => (
-        <line key={i} x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="var(--border-strong)" strokeWidth={1} opacity={0.5} />
+        <line key={i} x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="var(--border-strong)" strokeWidth={1} opacity={0.38} />
       ))}
       {nodes.map(([x,y],i) => (
         <circle key={i} cx={x} cy={y} r={7} fill="var(--surface)" stroke="var(--border-strong)" strokeWidth={1.5} />
@@ -291,12 +313,12 @@ function TokenIcon() {
   const tokens = ['The', 'quick', 'brown', 'fox'];
   const colors = ['var(--teal)', 'var(--accent)', 'var(--blue)', 'var(--orange)'];
   return (
-    <svg width="180" height="44" viewBox="0 0 180 44" fill="none">
+    <svg width="180" height="60" viewBox="0 0 180 60" fill="none">
       {tokens.map((t, i) => (
         <g key={i}>
-          <rect x={6 + i * 43} y={12} width={38} height={20} rx={5}
+          <rect x={6 + i * 43} y={20} width={38} height={20} rx={5}
             fill={colors[i]} fillOpacity={0.12} stroke={colors[i]} strokeOpacity={0.5} strokeWidth={1} />
-          <text x={25 + i * 43} y={26} textAnchor="middle" fontSize={10}
+          <text x={25 + i * 43} y={34} textAnchor="middle" fontSize={10}
             fill={colors[i]} fontFamily="var(--font-mono)">{t}</text>
         </g>
       ))}
