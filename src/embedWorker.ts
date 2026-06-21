@@ -3,11 +3,6 @@ const step = (s: string) => { steps.push(s); self.postMessage({ type: 'debug', s
 
 step('worker-started');
 
-// Clear any stale cached HTML responses from before model files existed in public/
-if (typeof caches !== 'undefined') {
-  caches.delete('transformers-cache').catch(() => {});
-}
-
 let mod: { pipeline: Function; env: Record<string, unknown> } | null = null;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let embedder: any = null;
@@ -21,9 +16,7 @@ async function getEmbedder() {
     mod!.env.localModelPath = '/models/';
     mod!.env.allowLocalModels = true;
     mod!.env.allowRemoteModels = false;
-    // Don't use the browser's Cache API for model files — stale HTML responses
-    // from 404s can get stuck there and cause JSON.parse errors.
-    (mod!.env as any).useBrowserCache = false;
+    // Browser cache enabled — model files (22 MB) are cached after the first visit.
 
     // Build a blob URL for the ORT WASM factory so ORT can import() it safely.
     // Vite dev server blocks import() on files in public/, but import(blobURL) works fine.

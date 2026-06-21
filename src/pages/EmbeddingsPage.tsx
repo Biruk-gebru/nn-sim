@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useCallback } from 'react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { ANCHOR_EMBEDDINGS } from '../engine/anchorEmbeddings';
 
 // ── Category config ────────────────────────────────────────────
@@ -97,6 +97,7 @@ export function EmbeddingsPage() {
   // Real-time embedding state
   const [modelStatus, setModelStatus] = useState<ModelStatus>('idle');
   const [modelError, setModelError] = useState('');
+  const [loadingStep, setLoadingStep] = useState('');
   const [inputWord, setInputWord] = useState('');
   const [computing, setComputing] = useState(false);
   const [result, setResult] = useState<UserResult | null>(null);
@@ -110,12 +111,16 @@ export function EmbeddingsPage() {
     workerRef.current = worker;
     worker.onmessage = (e) => {
       if (e.data.type === 'ready') setModelStatus('ready');
-      if (e.data.type === 'debug') setModelError(`step: ${e.data.step}`);
+      if (e.data.type === 'debug') setLoadingStep(e.data.step);
       if (e.data.type === 'error') { setModelError(e.data.message); setModelStatus('error'); }
     };
-    worker.onerror = (e) => { setModelError(`worker onerror: ${e.message}`); setModelStatus('error'); };
+    worker.onerror = (e) => { setModelError(e.message); setModelStatus('error'); };
     worker.postMessage({ type: 'load' });
   }, [modelStatus]);
+
+  // Start loading as soon as the page opens — model is cached after first visit
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { loadModel(); }, []);
 
   function embedWord(raw: string) {
     const word = raw.trim();
@@ -286,36 +291,46 @@ export function EmbeddingsPage() {
               onBlur={e => { e.currentTarget.style.borderColor = 'var(--border-mid)'; }}
             />
             <button
-              onClick={() => { if (modelStatus === 'idle') { loadModel(); } else { embedWord(inputWord); } }}
-              disabled={computing || modelStatus === 'loading'}
+              onClick={() => embedWord(inputWord)}
+              disabled={computing || modelStatus !== 'ready'}
               className="ctrl-btn"
               style={{
                 background: 'var(--accent-dim)', border: '1px solid var(--accent)', borderRadius: 6,
-                color: (computing || modelStatus === 'loading') ? 'var(--text-faint)' : 'var(--accent)',
-                fontSize: 13, fontFamily: 'var(--font-mono)', cursor: (computing || modelStatus === 'loading') ? 'not-allowed' : 'pointer',
+                color: modelStatus === 'ready' && !computing ? 'var(--accent)' : 'var(--text-faint)',
+                fontSize: 13, fontFamily: 'var(--font-mono)',
+                cursor: modelStatus === 'ready' && !computing ? 'pointer' : 'not-allowed',
                 padding: '8px 16px', transition: 'color 0.15s, background 0.15s',
                 flexShrink: 0,
               }}
             >
-              {modelStatus === 'idle' ? 'load model' : modelStatus === 'loading' ? 'loading…' : computing ? 'computing…' : 'embed →'}
+              {computing ? 'computing...' : 'embed →'}
             </button>
           </div>
 
           {/* Status / progress */}
           {modelStatus === 'loading' && (
-            <p style={{ margin: '12px 0 0', fontSize: 12, color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
-              loading all-MiniLM-L6-v2 (~22 MB) — runs entirely in your browser via WebAssembly
-              {modelError ? ` [${modelError}]` : ''}
-            </p>
+            <div style={{ margin: '12px 0 0', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <LoadingDots />
+              <span style={{ fontSize: 12, color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
+                {friendlyStep(loadingStep)}
+              </span>
+            </div>
           )}
           {modelStatus === 'error' && (
-            <p style={{ margin: '12px 0 0', fontSize: 12, color: 'var(--red)', fontFamily: 'var(--font-mono)' }}>
-              failed to load model — {modelError || 'check the browser console for details'}
-            </p>
+            <div style={{ margin: '12px 0 0' }}>
+              <p style={{ margin: 0, fontSize: 12, color: 'var(--red)', fontFamily: 'var(--font-mono)' }}>
+                Couldn't load the language model. Try refreshing the page.
+              </p>
+              {modelError && (
+                <p style={{ margin: '4px 0 0', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>
+                  {modelError.length < 120 ? modelError : 'See browser console for details.'}
+                </p>
+              )}
+            </div>
           )}
           {modelStatus === 'ready' && !result && !computing && (
-            <p style={{ margin: '12px 0 0', fontSize: 12, color: 'var(--green)', fontFamily: 'var(--font-mono)' }}>
-              model ready — type any word and press enter
+            <p style={{ margin: '10px 0 0', fontSize: 12, color: 'var(--green)', fontFamily: 'var(--font-mono)' }}>
+              Ready. Type a word above and press Enter.
             </p>
           )}
         </div>
@@ -404,6 +419,38 @@ export function EmbeddingsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// ── Loading helpers ────────────────────────────────────────────
+
+function friendlyStep(step: string): string {
+  if (!step) return 'Starting up...';
+  if (step.startsWith('fetching-wasm')) return 'Preparing computation engine...';
+  const map: Record<string, string> = {
+    'worker-started':          'Starting up...',
+    'importing-transformers':  'Loading library...',
+    'transformers-imported':   'Setting up engine...',
+    'wasm-factory-blob-ready': 'Engine ready...',
+    'env-configured':          'Configuring...',
+    'creating-pipeline':       'Downloading model (22 MB, cached after first visit)...',
+  };
+  return map[step] ?? 'Loading...';
+}
+
+function LoadingDots() {
+  return (
+    <span style={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>
+      {[0, 1, 2].map(i => (
+        <span key={i} style={{
+          width: 4, height: 4, borderRadius: '50%',
+          background: 'var(--text-dim)',
+          display: 'inline-block',
+          animation: 'blink 1.4s ease-in-out infinite',
+          animationDelay: `${i * 0.2}s`,
+        }} />
+      ))}
+    </span>
   );
 }
 
