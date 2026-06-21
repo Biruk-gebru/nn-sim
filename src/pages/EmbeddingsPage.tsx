@@ -248,6 +248,26 @@ export function EmbeddingsPage() {
             hover a word to explore its neighbors
           </p>
         )}
+
+        <div style={{ marginTop: 56, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
+          <p style={{ margin: '0 0 20px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>how it works</p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            An embedding maps a discrete object — a word, a token, a user ID — to a point in continuous vector space. The key insight from Word2Vec (2013) is that if you train a model to predict context words, semantically similar words end up near each other as an emergent consequence of the training objective, without being told what "similar" means.
+          </p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            This geometry supports vector arithmetic. The canonical example: vec("king") − vec("man") + vec("woman") ≈ vec("queen"). The difference vector encodes the concept of gender, so subtracting "man" and adding "woman" shifts "king" toward "queen". Similar arithmetic works for verb tenses, comparative adjectives, and country–capital pairs.
+          </p>
+          <p style={{ margin: '0 0 32px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            In practice, word embeddings have 100–4096 dimensions. What you see here is a 2D projection — the kind produced by t-SNE or PCA — that preserves cluster structure while compressing away most dimensions. Hover any word to see its five nearest neighbours in this projected space.
+          </p>
+          <p style={{ margin: '0 0 10px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>learn more</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <a href="https://arxiv.org/abs/1301.3781" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Word2Vec paper — Mikolov et al., 2013 (arxiv)</a>
+            <a href="https://jalammar.github.io/illustrated-word2vec/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ The Illustrated Word2Vec — Jay Alammar</a>
+            <a href="https://projector.tensorflow.org/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Embedding Projector — interactive 3D exploration (TensorFlow)</a>
+            <a href="https://nlp.stanford.edu/projects/glove/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ GloVe: Global Vectors for Word Representation (Stanford NLP)</a>
+          </div>
+        </div>
       </div>
     </div>
   );

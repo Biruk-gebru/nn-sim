@@ -219,6 +219,26 @@ export function TokenizerPage() {
             Start typing above to see tokens.
           </p>
         )}
+
+        <div style={{ marginTop: 56, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
+          <p style={{ margin: '0 0 20px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>how it works</p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Language models don't read characters or words — they read tokens. Tokenization converts raw text into a sequence of integer IDs that a model processes. GPT-2 (used here) uses Byte Pair Encoding (BPE): start with individual bytes, then iteratively merge the most frequent adjacent pairs until a target vocabulary size is reached. GPT-2 has 50,257 tokens; GPT-4 has 100,256.
+          </p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            A few things become obvious when you experiment: common English words like "the" are usually one token. Rare words, names, and words in other languages get split into fragments — try typing a Japanese or Arabic sentence and compare the count. Leading spaces are part of the token ("·world" is different from "world"). Numbers are often split digit by digit, which is why LLMs struggle at arithmetic: each digit is a separate token that must be reasoned about individually.
+          </p>
+          <p style={{ margin: '0 0 32px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Token count matters in practice: LLMs have a context window measured in tokens, and API pricing is per token. The same content in English might use half as many tokens as in another language, because models trained mostly on English data develop denser English representations.
+          </p>
+          <p style={{ margin: '0 0 10px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>learn more</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <a href="https://platform.openai.com/tokenizer" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ OpenAI Tokenizer playground</a>
+            <a href="https://huggingface.co/docs/tokenizers/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Hugging Face Tokenizers documentation</a>
+            <a href="https://www.youtube.com/watch?v=zduSFxRajkE" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Andrej Karpathy: Let's build the GPT Tokenizer (YouTube)</a>
+            <a href="https://arxiv.org/abs/1508.07909" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ BPE paper — Sennrich et al., 2016 (arxiv)</a>
+          </div>
+        </div>
       </div>
     </div>
   );

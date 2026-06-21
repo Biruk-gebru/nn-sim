@@ -352,6 +352,26 @@ export function RegressionPage() {
             </span>
           </button>
         </div>
+
+        <div style={{ marginTop: 56, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
+          <p style={{ margin: '0 0 20px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>how it works</p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Linear regression finds the line y = mx + b that best fits a set of data points. "Best fit" means minimising mean squared error — the average of the squared vertical distances from each point to the line (the red residual lines above). Squaring the errors makes them always positive and penalises large errors more than small ones, producing a unique differentiable loss surface.
+          </p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Gradient descent is the optimiser. At each step it computes the direction in which loss increases fastest (the gradient), then moves the parameters a small step in the opposite direction. The step size is the learning rate. Too small and convergence is painfully slow. Too large and the parameters overshoot the minimum, oscillating or diverging — try lr = 0.1 and watch this happen.
+          </p>
+          <p style={{ margin: '0 0 32px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Linear regression has a closed-form solution (the normal equation), but gradient descent generalises to arbitrarily complex models — which is why it became the universal training algorithm in deep learning. Drag a point far from the cluster and watch the line chase it: you're watching gradient descent adapt to a distributional shift in real time.
+          </p>
+          <p style={{ margin: '0 0 10px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>learn more</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <a href="https://www.coursera.org/specializations/machine-learning-introduction" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Andrew Ng: Machine Learning Specialization (Coursera)</a>
+            <a href="https://distill.pub/2017/momentum/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Why Momentum Really Works — distill.pub</a>
+            <a href="https://arxiv.org/abs/1802.01528" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ The Matrix Calculus You Need for Deep Learning (arxiv)</a>
+            <a href="https://www.khanacademy.org/math/statistics-probability/describing-relationships-quantitative-data" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Khan Academy: Linear regression foundations</a>
+          </div>
+        </div>
       </div>
     </div>
   );

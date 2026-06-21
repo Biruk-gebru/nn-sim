@@ -75,3 +75,4 @@ body {
 .canvas-btn:hover { color: var(--accent) !important; border-color: var(--accent) !important; }
 .nav-link:hover { color: var(--accent) !important; }
 .inspector-close:hover { color: var(--text) !important; }
+.theory-link:hover { text-decoration: underline; }

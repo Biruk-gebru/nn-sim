@@ -341,6 +341,26 @@ export function AttentionPage() {
             ))}
           </div>
         )}
+
+        <div style={{ marginTop: 56, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
+          <p style={{ margin: '0 0 20px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>how it works</p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Self-attention lets each token look at every other token in the sequence when deciding what information to carry forward. The mechanism was introduced in "Attention Is All You Need" (Vaswani et al., 2017) and became the Transformer — the architecture behind GPT, BERT, and nearly every large language model today.
+          </p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Each token produces three vectors: a Query (what am I looking for?), a Key (what do I have to offer?), and a Value (what will I contribute?). Attention weights are the dot products of each query with all keys, scaled by √dₖ to prevent large values from pushing softmax into regions of near-zero gradient, then normalised with softmax. The token's output is a weighted sum of all value vectors.
+          </p>
+          <p style={{ margin: '0 0 32px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            The patterns in the heatmap are computed from real scaled dot-product attention with randomly initialised but fixed weights. Real models train these via gradient descent, learning to attend to syntactic heads, coreferring nouns, and subject–verb pairs. Multi-head attention runs this process in parallel with different weight matrices, letting each head specialise in a different type of relationship.
+          </p>
+          <p style={{ margin: '0 0 10px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>learn more</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Attention Is All You Need — Vaswani et al., 2017 (arxiv)</a>
+            <a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ The Illustrated Transformer — Jay Alammar</a>
+            <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Andrej Karpathy: Let's build GPT from scratch (YouTube)</a>
+            <a href="https://transformer-circuits.pub/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Transformer Circuits — Anthropic research</a>
+          </div>
+        </div>
       </div>
     </div>
   );

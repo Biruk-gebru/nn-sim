@@ -16,7 +16,8 @@ export function NNPage() {
   const actStr = [...new Set(activationNames)].join('/');
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--bg)' }}>
+    <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg)' }}>
+      <div style={{ height: 'clamp(520px, 60vh, 720px)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
       {/* Module header */}
       <div style={{
         padding: '8px 20px',
@@ -84,6 +85,29 @@ export function NNPage() {
       </div>
 
       <Controls />
+      </div>
+
+      <div style={{ maxWidth: 880, margin: '0 auto', padding: '40px 32px 80px', width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ paddingTop: 40, borderTop: '1px solid var(--border)' }}>
+          <p style={{ margin: '0 0 20px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>how it works</p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            A neural network is a chain of mathematical transformations stacked in layers. Each neuron computes a weighted sum of its inputs, adds a bias, then passes the result through a non-linear activation function. Stacking many layers allows the network to compose simple transformations into ones that can separate complex patterns — the XOR problem here is the canonical example that single-layer perceptrons famously cannot solve.
+          </p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Training runs in two directions. The forward pass computes a prediction for each input; the loss function measures how wrong it is. Backpropagation then applies the chain rule of calculus to trace how much each weight contributed to the error. Gradient descent adjusts every weight a small step opposite to its gradient, nudging the network toward lower loss.
+          </p>
+          <p style={{ margin: '0 0 32px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            The animation shows the full cycle: each step is one epoch — all four XOR samples forward, loss computed, gradients flowing backward, weights updated. Edge colour reflects the current weight; neuron brightness reflects its activation. Click any neuron to open the inspector and see the exact arithmetic for that node.
+          </p>
+          <p style={{ margin: '0 0 10px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>learn more</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <a href="https://www.3blue1brown.com/topics/neural-networks" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ 3Blue1Brown: Neural Networks series</a>
+            <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Neural Networks and Deep Learning — Michael Nielsen (free book)</a>
+            <a href="https://cs231n.github.io/neural-networks-1/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ CS231n Lecture Notes: Neural Networks</a>
+            <a href="https://www.3blue1brown.com/lessons/backpropagation-calculus" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Backpropagation calculus — 3Blue1Brown</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

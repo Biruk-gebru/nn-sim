@@ -353,6 +353,26 @@ export function ActivationsPage() {
             Hover the chart to compare values at a point.
           </p>
         )}
+
+        <div style={{ marginTop: 56, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
+          <p style={{ margin: '0 0 20px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>how it works</p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Without activation functions, any number of stacked linear layers collapses to a single linear transformation — depth adds no expressive power. Non-linearity is what makes deep networks capable of approximating arbitrary functions. The activation function is the neuron's decision about what signal to pass forward.
+          </p>
+          <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            Sigmoid and tanh were standard for decades but suffer from the vanishing gradient problem: at large positive or negative inputs their derivatives approach zero, so gradients shrink to near-nothing as they propagate backward through many layers. Toggle the derivative view and drag the cursor to the far left or right — the f′(x) curves for sigmoid and tanh flatten toward zero, while ReLU stays constant at 1.
+          </p>
+          <p style={{ margin: '0 0 32px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>
+            ReLU (2011) solved this: its derivative is 1 for all positive inputs. Its downside is "dying ReLU" — neurons stuck at negative inputs receive zero gradient and switch off permanently. Leaky ReLU and GELU address this with non-zero slopes for negative values. GELU, used in GPT and BERT, is a smooth probabilistic variant that tends to outperform ReLU in transformer architectures.
+          </p>
+          <p style={{ margin: '0 0 10px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>learn more</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <a href="https://cs231n.github.io/neural-networks-1/#actfun" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ CS231n: Activation Functions</a>
+            <a href="https://arxiv.org/abs/1606.08415" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ GELU paper — Hendrycks & Gimpel, 2016 (arxiv)</a>
+            <a href="https://www.deeplearningbook.org/contents/mlp.html" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Deep Learning textbook, Chapter 6 — Goodfellow et al.</a>
+            <a href="https://arxiv.org/abs/1811.03378" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Activation functions survey (arxiv)</a>
+          </div>
+        </div>
       </div>
     </div>
   );
