@@ -317,7 +317,7 @@ export function TokenizerPage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg)' }}>
-      <div style={{ maxWidth: 860, margin: '0 auto', padding: '48px 32px 80px' }}>
+      <div className="page-outer" style={{ maxWidth: 860, margin: '0 auto', padding: '48px 32px 80px' }}>
 
         {/* Header */}
         <h1 style={{ margin: '0 0 10px', fontFamily: 'var(--font-display)', fontSize: 'clamp(26px,4vw,38px)', fontWeight: 800, color: 'var(--text)', letterSpacing: -0.5 }}>
@@ -394,7 +394,7 @@ export function TokenizerPage() {
             )}
 
             {/* Tabbed table */}
-            <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden' }}>
+            <div className="scroll-x" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden' }}>
               {/* Tab bar */}
               <div style={{ display: 'flex', borderBottom: '1px solid var(--border)', background: 'var(--surface-alt)' }}>
                 {TABS.map(t => (

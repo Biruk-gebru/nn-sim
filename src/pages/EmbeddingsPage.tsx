@@ -158,7 +158,7 @@ export function EmbeddingsPage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg)' }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '48px 32px 80px' }}>
+      <div className="page-outer" style={{ maxWidth: 900, margin: '0 auto', padding: '48px 32px 80px' }}>
 
         <h1 style={{ margin: '0 0 10px', fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 800, color: 'var(--text)', letterSpacing: -0.5 }}>
           Embeddings

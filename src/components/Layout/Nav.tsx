@@ -42,7 +42,7 @@ export function Nav() {
 
       <div style={{ width: 1, height: 20, background: 'var(--border-mid)', opacity: 0.4 }} />
 
-      <div style={{ display: 'flex', gap: 18 }}>
+      <div className="nav-modules" style={{ display: 'flex', gap: 18 }}>
         {MODULES.map(({ path, label }) => {
           const active = location.pathname === path;
           return (
@@ -63,7 +63,7 @@ export function Nav() {
         })}
       </div>
 
-      <div style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-faint)' }}>
+      <div className="nav-tagline" style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-faint)', flexShrink: 0 }}>
         interactive ml demos
       </div>
     </nav>

@@ -423,7 +423,7 @@ export function RegressionPage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg)' }}>
-      <div style={{ maxWidth: 960, margin: '0 auto', padding: '48px 28px 80px' }}>
+      <div className="page-outer" style={{ maxWidth: 960, margin: '0 auto', padding: '48px 28px 80px' }}>
 
         {/* Header */}
         <h1 style={{ margin: '0 0 10px', fontFamily: 'var(--font-display)', fontSize: 'clamp(26px,4vw,38px)', fontWeight: 800, color: 'var(--text)', letterSpacing: -0.5 }}>
@@ -457,7 +457,7 @@ export function RegressionPage() {
         </div>
 
         {/* Main grid: scatter + contour */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 12, marginBottom: 14 }}>
+        <div className="reg-main-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 12, marginBottom: 14 }}>
 
           {/* Scatter plot */}
           <div style={{ ...card, overflow: 'hidden' }}>

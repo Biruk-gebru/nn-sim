@@ -17,7 +17,7 @@ export function NNPage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg)' }}>
-      <div style={{ height: 'clamp(800px, 94vh, 1080px)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <div className="nn-view" style={{ height: 'clamp(600px, 94vh, 1080px)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
       {/* Module header */}
       <div style={{
         padding: '8px 20px',
@@ -48,9 +48,9 @@ export function NNPage() {
       </div>
 
       {/* Main content */}
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative', flexWrap: 'wrap' }}>
+      <div className="nn-main" style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative', flexWrap: 'wrap' }}>
         {/* Network canvas */}
-        <div style={{
+        <div className="nn-graph" style={{
           flex: '1 1 400px',
           display: 'flex',
           alignItems: 'center',
@@ -58,12 +58,13 @@ export function NNPage() {
           padding: 16,
           minWidth: 0,
           minHeight: 260,
+          overflow: 'auto',
         }}>
           <NetworkGraph />
         </div>
 
         {/* Right sidebar */}
-        <div style={{
+        <div className="nn-sidebar" style={{
           width: 252,
           minWidth: 220,
           padding: '14px 14px',
@@ -87,7 +88,7 @@ export function NNPage() {
       <Controls />
       </div>
 
-      <div style={{ maxWidth: 880, margin: '0 auto', padding: '40px 32px 80px', width: '100%', boxSizing: 'border-box' }}>
+      <div className="page-outer" style={{ maxWidth: 880, margin: '0 auto', padding: '40px 32px 80px', width: '100%', boxSizing: 'border-box' }}>
         <div style={{ paddingTop: 40, borderTop: '1px solid var(--border)' }}>
           <p style={{ margin: '0 0 20px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>how it works</p>
           <p style={{ margin: '0 0 14px', fontSize: 15, color: 'var(--text-mid)', lineHeight: 1.78 }}>

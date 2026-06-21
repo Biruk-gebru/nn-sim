@@ -597,7 +597,7 @@ export function ActivationsPage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg)' }}>
-      <div style={{ maxWidth: 920, margin: '0 auto', padding: '48px 28px 80px' }}>
+      <div className="page-outer" style={{ maxWidth: 920, margin: '0 auto', padding: '48px 28px 80px' }}>
 
         {/* Header */}
         <h1 style={{ margin: '0 0 10px', fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 800, color: 'var(--text)', letterSpacing: -0.5 }}>

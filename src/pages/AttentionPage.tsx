@@ -223,7 +223,7 @@ function ProjectStage({ data, selected }: { data: TokData[]; selected: number })
         W<sub>Q</sub>, W<sub>K</sub>, W<sub>V</sub> ∈ ℝ<sup>{H_DIM}×{E_DIM}</sup>
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+      <div className="three-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
         {cols.map(({ label, vals, color, desc }) => (
           <div key={label} style={{
             background: 'var(--surface-alt)',
@@ -331,7 +331,7 @@ function SoftmaxStage({ data, selected }: { data: TokData[]; selected: number })
         The token with the highest score gets the most attention weight.
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+      <div className="two-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
         <div style={{ background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: 8, padding: '14px 16px' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-dim)', marginBottom: 12 }}>scaled scores (logits)</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -389,7 +389,7 @@ function OutputStage({ data, attnRow }: { data: TokData[]; attnRow: number[] }) 
         Tokens with higher attention contribute more to the final representation.
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: 16, alignItems: 'start', marginBottom: 20 }}>
+      <div className="two-col-grid" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: 16, alignItems: 'start', marginBottom: 20 }}>
         <div style={{ background: 'var(--surface-alt)', border: '1px solid var(--border)', borderRadius: 8, padding: '14px 16px' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-dim)', marginBottom: 12 }}>αᵢⱼ × Vⱼ contribution</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -577,7 +577,7 @@ export function AttentionPage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg)' }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '48px 28px 80px' }}>
+      <div className="page-outer" style={{ maxWidth: 900, margin: '0 auto', padding: '48px 28px 80px' }}>
 
         {/* Header */}
         <h1 style={{
@@ -749,7 +749,7 @@ export function AttentionPage() {
             Full attention pattern — click a token to see which others it attends to
           </p>
 
-          <div style={{ ...card, padding: '16px 14px 12px' }}>
+          <div className="scroll-x" style={{ ...card, padding: '16px 14px 12px' }}>
             <ArcViz tokens={tokens} attn={attnMatrix} selected={arcSelected} onSelect={handleArcSelect} />
           </div>
 

@@ -80,3 +80,63 @@ body {
 .nav-link:hover { color: var(--accent) !important; }
 .inspector-close:hover { color: var(--text) !important; }
 .theory-link:hover { text-decoration: underline; }
+
+/* ── Mobile ────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Nav: scrollable module strip, no tagline */
+  .nav-modules {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-shrink: 1;
+    min-width: 0;
+    gap: 14px !important;
+    padding-bottom: 2px;
+  }
+  .nav-modules::-webkit-scrollbar { display: none; }
+  .nav-tagline { display: none !important; }
+
+  /* Landing */
+  .hero-content { padding: 40px 16px 36px !important; }
+  .grid-section  { padding: 28px 16px 48px !important; }
+
+  /* All module pages: tighter horizontal padding */
+  .page-outer {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 28px !important;
+    padding-bottom: 48px !important;
+  }
+
+  /* NNPage: remove fixed height, stack sidebar below graph */
+  .nn-view    { height: auto !important; }
+  .nn-main    { flex-direction: column !important; overflow: visible !important; }
+  .nn-graph   { min-height: 300px; flex: 0 0 auto !important; }
+  .nn-sidebar {
+    width: 100% !important;
+    min-width: 0 !important;
+    border-left: none !important;
+    border-top: 1px solid var(--border) !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    padding: 12px 14px !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+  }
+  .nn-sidebar > * { flex: 1 1 140px; min-width: 0; }
+
+  /* Regression: stack scatter + contour vertically */
+  .reg-main-grid { grid-template-columns: 1fr !important; }
+
+  /* Two/three-col grids (attention, activations detail) → single col */
+  .two-col-grid { grid-template-columns: 1fr !important; }
+  /* Q/K/V three-col → two-col on narrow */
+  .three-col-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
+
+  /* Wide SVG/tables: horizontal scroll */
+  .scroll-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

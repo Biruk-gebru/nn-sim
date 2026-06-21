@@ -76,7 +76,7 @@ export function Landing() {
           zIndex: 1,
         }} />
 
-        <div style={{ padding: '88px 56px 72px', maxWidth: 1200, position: 'relative', zIndex: 2 }}>
+        <div className="hero-content" style={{ padding: '88px 56px 72px', maxWidth: 1200, position: 'relative', zIndex: 2 }}>
           <h1 style={{
             margin: '0 0 20px',
             fontFamily: 'var(--font-display)',
@@ -144,7 +144,7 @@ export function Landing() {
       </div>
 
       {/* Module grid */}
-      <div style={{ padding: '48px 56px 80px' }}>
+      <div className="grid-section" style={{ padding: '48px 56px 80px' }}>
         <p style={{
           margin: '0 0 24px',
           fontFamily: 'var(--font-mono)',
