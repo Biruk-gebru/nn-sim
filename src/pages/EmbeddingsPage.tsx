@@ -101,41 +101,37 @@ export function EmbeddingsPage() {
   const [computing, setComputing] = useState(false);
   const [result, setResult] = useState<UserResult | null>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const embedderRef = useRef<any>(null);
+  const workerRef = useRef<Worker | null>(null);
 
-  const loadModel = useCallback(async () => {
-    if (embedderRef.current || modelStatus === 'loading') return;
+  const loadModel = useCallback(() => {
+    if (workerRef.current || modelStatus === 'loading') return;
     setModelStatus('loading');
-    try {
-      const { pipeline, env } = await import('@huggingface/transformers');
-      env.localModelPath = '/models/';
-      env.allowRemoteModels = false;
-      embedderRef.current = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', { dtype: 'q8' });
-      setModelStatus('ready');
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
-      console.error('[embeddings] model load failed:', e);
-      setModelError(msg);
-      setModelStatus('error');
-    }
+    const worker = new Worker(new URL('../embedWorker.ts', import.meta.url), { type: 'module' });
+    workerRef.current = worker;
+    worker.onmessage = (e) => {
+      if (e.data.type === 'ready') setModelStatus('ready');
+      if (e.data.type === 'error') { setModelError(e.data.message); setModelStatus('error'); }
+    };
+    worker.postMessage({ type: 'load' });
   }, [modelStatus]);
 
-  async function embedWord(raw: string) {
+  function embedWord(raw: string) {
     const word = raw.trim();
-    if (!word || !embedderRef.current) return;
+    if (!word || !workerRef.current || modelStatus !== 'ready') return;
     setComputing(true);
-    try {
-      const out = await embedderRef.current(word, { pooling: 'mean', normalize: true });
-      const emb = Array.from(out.data as Float32Array);
-      const sims = WORDS.map(w => ({
-        word: w.word, sim: cosine(emb, ANCHOR_EMBEDDINGS[w.word] ?? []),
-        cat: w.cat, color: CAT_COLOR[w.cat],
-      })).sort((a, b) => b.sim - a.sim);
-      setResult({ word, embedding: emb, pos: projectTo2D(emb), nearest: sims.slice(0, 6) });
-    } finally {
-      setComputing(false);
-    }
+    workerRef.current.onmessage = (e) => {
+      if (e.data.type === 'result') {
+        const emb: number[] = e.data.embedding;
+        const sims = WORDS.map(w => ({
+          word: w.word, sim: cosine(emb, ANCHOR_EMBEDDINGS[w.word] ?? []),
+          cat: w.cat, color: CAT_COLOR[w.cat],
+        })).sort((a, b) => b.sim - a.sim);
+        setResult({ word, embedding: emb, pos: projectTo2D(emb), nearest: sims.slice(0, 6) });
+        setComputing(false);
+      }
+      if (e.data.type === 'error') { setModelError(e.data.message); setComputing(false); }
+    };
+    workerRef.current.postMessage({ type: 'embed', text: word });
   }
 
   function onInputKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
