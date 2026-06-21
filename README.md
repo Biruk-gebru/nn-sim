@@ -1,4 +1,4 @@
-![ML Playground](./public/og-image.png)
+![ML Playground](./docs/screenshots/landing.png)
 
 # ML Playground
 
@@ -75,31 +75,6 @@ npm run preview  # serve the production build locally
 ```
 
 No environment variables needed. Everything runs in the browser.
-
----
-
-## Deployment
-
-### One-click (Vercel)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Biruk-gebru/nn-sim)
-
-Vercel detects Vite automatically. No additional configuration required.
-
-### Manual (any static host)
-
-```bash
-npm run build
-# upload the dist/ directory to Netlify, GitHub Pages, S3, etc.
-```
-
-The app is a plain SPA. The only requirement is that the host serves `index.html` for all routes. On Vercel this is handled automatically by `vercel.json`:
-
-```json
-{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
-```
-
-Configure the equivalent fallback redirect on other platforms.
 
 ---
 
