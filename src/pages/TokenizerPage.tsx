@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { encode, decode } from 'gpt-tokenizer';
+import { encode, decode } from 'gpt-tokenizer/esm/encoding/r50k_base';
 
 // ── Presets ────────────────────────────────────────────────────────────────
 
