@@ -110,8 +110,10 @@ export function EmbeddingsPage() {
     workerRef.current = worker;
     worker.onmessage = (e) => {
       if (e.data.type === 'ready') setModelStatus('ready');
+      if (e.data.type === 'debug') setModelError(`step: ${e.data.step}`);
       if (e.data.type === 'error') { setModelError(e.data.message); setModelStatus('error'); }
     };
+    worker.onerror = (e) => { setModelError(`worker onerror: ${e.message}`); setModelStatus('error'); };
     worker.postMessage({ type: 'load' });
   }, [modelStatus]);
 
@@ -303,6 +305,7 @@ export function EmbeddingsPage() {
           {modelStatus === 'loading' && (
             <p style={{ margin: '12px 0 0', fontSize: 12, color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
               loading all-MiniLM-L6-v2 (~22 MB) — runs entirely in your browser via WebAssembly
+              {modelError ? ` [${modelError}]` : ''}
             </p>
           )}
           {modelStatus === 'error' && (

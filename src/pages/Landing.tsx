@@ -26,7 +26,7 @@ const MODULES: Module[] = [
   {
     path: '/embeddings',
     label: 'Embeddings',
-    tagline: 'Words mapped to vectors — explore similarity and distance in 2D space.',
+    tagline: 'Words mapped to vectors. Explore similarity and distance in 2D space.',
     status: 'live',
     icon: <EmbedIcon />,
   },
@@ -47,7 +47,7 @@ const MODULES: Module[] = [
   {
     path: '/attention',
     label: 'Attention',
-    tagline: 'Query, key, and value — see which tokens attend to which and why.',
+    tagline: 'Query, key, and value: see which tokens attend to which and why.',
     status: 'live',
     icon: <AttentionIcon />,
   },
@@ -62,36 +62,74 @@ export function Landing() {
     }}>
       {/* Hero */}
       <div style={{
-        padding: '80px 56px 64px',
+        position: 'relative',
+        overflow: 'hidden',
         borderBottom: '1px solid var(--border)',
-        maxWidth: 1200,
       }}>
+        {/* Background network illustration */}
+        <HeroBg />
+        {/* Fade the illustration into the background on the left */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to right, #1c140d 32%, rgba(28,20,13,0.55) 58%, rgba(28,20,13,0) 100%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }} />
 
-        <h1 style={{
-          margin: '0 0 20px',
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(36px, 5vw, 60px)',
-          fontWeight: 800,
-          color: 'var(--text)',
-          lineHeight: 1.1,
-          letterSpacing: -1,
-          maxWidth: 620,
-        }}>
-          Learn ML by<br />
-          <span style={{ color: 'var(--accent)' }}>watching it work.</span>
-        </h1>
+        <div style={{ padding: '88px 56px 72px', maxWidth: 1200, position: 'relative', zIndex: 2 }}>
+          <h1 style={{
+            margin: '0 0 20px',
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(36px, 5vw, 60px)',
+            fontWeight: 800,
+            color: 'var(--text)',
+            lineHeight: 1.1,
+            letterSpacing: -1,
+            maxWidth: 620,
+          }}>
+            Learn ML by<br />
+            <span style={{ color: 'var(--accent)' }}>watching it work.</span>
+          </h1>
 
-        <p style={{
-          margin: 0,
-          fontSize: 17,
-          color: 'var(--text-mid)',
-          lineHeight: 1.75,
-          maxWidth: 480,
-          fontWeight: 400,
-        }}>
-          Each module is a live, interactive demo. Adjust parameters and see
-          what actually happens — no slides, no passive reading.
-        </p>
+          <p style={{
+            margin: '0 0 32px',
+            fontSize: 17,
+            color: 'var(--text-mid)',
+            lineHeight: 1.75,
+            maxWidth: 460,
+            fontWeight: 400,
+          }}>
+            Each module is a live, interactive demo. Adjust parameters and see
+            what actually happens. No slides, no passive reading.
+          </p>
+
+          <div style={{ display: 'flex', gap: 28, alignItems: 'center', marginBottom: 32 }}>
+            {[
+              { n: '6', label: 'modules' },
+              { n: '100%', label: 'in-browser' },
+              { n: '0', label: 'installations' },
+            ].map(({ n, label }) => (
+              <div key={label}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 700, color: 'var(--text)', display: 'block', lineHeight: 1 }}>{n}</span>
+                <span style={{ fontSize: 11, color: 'var(--text-faint)', display: 'block', marginTop: 3 }}>{label}</span>
+              </div>
+            ))}
+          </div>
+
+          <Link to="/nn" style={{
+            display: 'inline-block',
+            padding: '9px 22px',
+            background: 'var(--accent)',
+            color: '#1c140d',
+            borderRadius: 6,
+            fontFamily: 'var(--font-mono)',
+            fontSize: 13,
+            fontWeight: 700,
+            textDecoration: 'none',
+          }}>
+            Start with Neural Network
+          </Link>
+        </div>
       </div>
 
       {/* Module grid */}
@@ -146,7 +184,6 @@ function ModuleCard({ mod }: { mod: Module }) {
             fontSize: 16,
             fontWeight: 700,
             color: 'var(--text)',
-            letterSpacing: -0.2,
             lineHeight: 1.2,
           }}>
             {mod.label}
@@ -175,6 +212,55 @@ function ModuleCard({ mod }: { mod: Module }) {
   return live
     ? <Link to={mod.path} style={{ textDecoration: 'none', display: 'block' }}>{inner}</Link>
     : inner;
+}
+
+/* ── Hero background ──────────────────────────────────────── */
+
+function HeroBg() {
+  const layers = [3, 5, 7, 7, 5, 3];
+  const BW = 560, BH = 380;
+
+  type N = { x: number; y: number; l: number; n: number };
+  const nodes: N[] = [];
+  layers.forEach((count, l) => {
+    const x = (l / (layers.length - 1)) * BW;
+    for (let n = 0; n < count; n++) {
+      nodes.push({ x, y: ((n + 1) / (count + 1)) * BH, l, n });
+    }
+  });
+
+  const edges: { x1: number; y1: number; x2: number; y2: number; k: string }[] = [];
+  nodes.forEach(to => {
+    if (to.l === 0) return;
+    nodes.filter(f => f.l === to.l - 1).forEach(from => {
+      edges.push({ x1: from.x, y1: from.y, x2: to.x, y2: to.y, k: `${from.l}-${from.n}-${to.l}-${to.n}` });
+    });
+  });
+
+  return (
+    <svg
+      viewBox={`0 0 ${BW} ${BH}`}
+      preserveAspectRatio="xMaxYMid meet"
+      style={{
+        position: 'absolute',
+        right: 0, top: '50%',
+        transform: 'translateY(-50%)',
+        width: '58%', height: '150%',
+        opacity: 0.07,
+        pointerEvents: 'none',
+        zIndex: 0,
+      }}
+    >
+      {edges.map(e => (
+        <line key={e.k} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
+          stroke="var(--text)" strokeWidth={0.55} />
+      ))}
+      {nodes.map(p => (
+        <circle key={`${p.l}-${p.n}`} cx={p.x} cy={p.y} r={3.5}
+          fill="var(--text)" />
+      ))}
+    </svg>
+  );
 }
 
 /* ── Decorative icons ─────────────────────────────────────── */

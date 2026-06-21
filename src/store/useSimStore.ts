@@ -11,6 +11,7 @@ const DEFAULT_SPEED = 1.0;
 const DEFAULT_THRESHOLD = 0.01;
 const HISTORY_CAP = 500;
 const CONFIG_KEY = 'nn-sim-config';
+const CONFIG_VERSION = 2; // bump to clear any stale persisted architecture
 
 interface PersistedConfig {
   architecture: number[];
@@ -24,7 +25,10 @@ interface PersistedConfig {
 function loadConfig(): Partial<PersistedConfig> {
   try {
     const raw = localStorage.getItem(CONFIG_KEY);
-    return raw ? JSON.parse(raw) : {};
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    if (parsed._v !== CONFIG_VERSION) return {}; // stale config — reset to defaults
+    return parsed;
   } catch {
     return {};
   }
@@ -32,7 +36,7 @@ function loadConfig(): Partial<PersistedConfig> {
 
 function saveConfig(c: PersistedConfig): void {
   try {
-    localStorage.setItem(CONFIG_KEY, JSON.stringify(c));
+    localStorage.setItem(CONFIG_KEY, JSON.stringify({ ...c, _v: CONFIG_VERSION }));
   } catch { /* ignore write failures */ }
 }
 

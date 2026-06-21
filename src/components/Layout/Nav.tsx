@@ -42,7 +42,7 @@ export function Nav() {
 
       <div style={{ width: 1, height: 20, background: 'var(--border-mid)', opacity: 0.4 }} />
 
-      <div style={{ display: 'flex', gap: 8 }}>
+      <div style={{ display: 'flex', gap: 18 }}>
         {MODULES.map(({ path, label }) => {
           const active = location.pathname === path;
           return (

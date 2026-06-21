@@ -17,7 +17,7 @@ export function NNPage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg)' }}>
-      <div style={{ height: 'clamp(520px, 60vh, 720px)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <div style={{ height: 'clamp(800px, 94vh, 1080px)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
       {/* Module header */}
       <div style={{
         padding: '8px 20px',
@@ -30,16 +30,16 @@ export function NNPage() {
         rowGap: 4,
         background: 'var(--surface)',
       }}>
-        <span style={{ fontSize: 11, color: 'var(--text-dim)', letterSpacing: 0.5 }}>
+        <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>
           {dataset} · {archStr} · {actStr}
         </span>
         {isConverged && (
           <span style={{
             fontSize: 10, color: 'var(--green)',
-            fontWeight: 700, letterSpacing: 1,
+            fontWeight: 600,
             fontFamily: 'var(--font-mono)',
           }}>
-            ✓ CONVERGED
+            converged
           </span>
         )}
         <span style={{ marginLeft: 'auto', fontSize: 10, color: 'var(--text-dim)' }}>
@@ -102,7 +102,7 @@ export function NNPage() {
           <p style={{ margin: '0 0 10px', fontSize: 11, color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>learn more</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <a href="https://www.3blue1brown.com/topics/neural-networks" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ 3Blue1Brown: Neural Networks series</a>
-            <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Neural Networks and Deep Learning — Michael Nielsen (free book)</a>
+            <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Neural Networks and Deep Learning by Michael Nielsen (free book)</a>
             <a href="https://cs231n.github.io/neural-networks-1/" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ CS231n Lecture Notes: Neural Networks</a>
             <a href="https://www.3blue1brown.com/lessons/backpropagation-calculus" target="_blank" rel="noopener noreferrer" className="theory-link" style={{ color: 'var(--accent)', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none' }}>→ Backpropagation calculus — 3Blue1Brown</a>
           </div>
