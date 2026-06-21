@@ -5,6 +5,8 @@ const MODULES = [
   { path: '/tokenizer', label: 'Tokenizer' },
   { path: '/activations', label: 'Activations' },
   { path: '/regression', label: 'Regression' },
+  { path: '/embeddings', label: 'Embeddings' },
+  { path: '/attention', label: 'Attention' },
 ];
 
 export function Nav() {

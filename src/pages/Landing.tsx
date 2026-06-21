@@ -27,7 +27,7 @@ const MODULES: Module[] = [
     path: '/embeddings',
     label: 'Embeddings',
     tagline: 'Words mapped to vectors — explore similarity and distance in 2D space.',
-    status: 'soon',
+    status: 'live',
     icon: <EmbedIcon />,
   },
   {
@@ -48,7 +48,7 @@ const MODULES: Module[] = [
     path: '/attention',
     label: 'Attention',
     tagline: 'Query, key, and value — see which tokens attend to which and why.',
-    status: 'soon',
+    status: 'live',
     icon: <AttentionIcon />,
   },
 ];
