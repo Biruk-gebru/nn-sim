@@ -2,6 +2,7 @@ import { createRouter, createRoute, createRootRoute, Outlet } from '@tanstack/re
 import { Nav } from './components/Layout/Nav';
 import { Landing } from './pages/Landing';
 import { NNPage } from './pages/NNPage';
+import { TokenizerPage } from './pages/TokenizerPage';
 import { createElement } from 'react';
 
 const rootRoute = createRootRoute({
@@ -24,7 +25,13 @@ const nnRoute = createRoute({
   component: NNPage,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, nnRoute]);
+const tokenizerRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/tokenizer',
+  component: TokenizerPage,
+});
+
+const routeTree = rootRoute.addChildren([indexRoute, nnRoute, tokenizerRoute]);
 
 export const router = createRouter({ routeTree });
 

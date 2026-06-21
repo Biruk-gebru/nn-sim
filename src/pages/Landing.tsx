@@ -20,7 +20,7 @@ const MODULES: Module[] = [
     path: '/tokenizer',
     label: 'Tokenizer',
     tagline: 'See how raw text is broken into tokens before it ever reaches a model.',
-    status: 'soon',
+    status: 'live',
     icon: <TokenIcon />,
   },
   {
