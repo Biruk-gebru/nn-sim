@@ -3,6 +3,7 @@ import { Link, useRouterState } from '@tanstack/react-router';
 const MODULES = [
   { path: '/nn', label: 'Neural Network' },
   { path: '/tokenizer', label: 'Tokenizer' },
+  { path: '/activations', label: 'Activations' },
 ];
 
 export function Nav() {

@@ -3,6 +3,7 @@ import { Nav } from './components/Layout/Nav';
 import { Landing } from './pages/Landing';
 import { NNPage } from './pages/NNPage';
 import { TokenizerPage } from './pages/TokenizerPage';
+import { ActivationsPage } from './pages/ActivationsPage';
 import { createElement } from 'react';
 
 const rootRoute = createRootRoute({
@@ -31,7 +32,13 @@ const tokenizerRoute = createRoute({
   component: TokenizerPage,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, nnRoute, tokenizerRoute]);
+const activationsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/activations',
+  component: ActivationsPage,
+});
+
+const routeTree = rootRoute.addChildren([indexRoute, nnRoute, tokenizerRoute, activationsRoute]);
 
 export const router = createRouter({ routeTree });
 

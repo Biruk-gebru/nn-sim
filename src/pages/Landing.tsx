@@ -41,7 +41,7 @@ const MODULES: Module[] = [
     path: '/activations',
     label: 'Activations',
     tagline: 'Compare sigmoid, ReLU, tanh, and GELU interactively on a single canvas.',
-    status: 'soon',
+    status: 'live',
     icon: <ActIcon />,
   },
   {
