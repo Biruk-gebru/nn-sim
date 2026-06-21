@@ -96,6 +96,7 @@ export function EmbeddingsPage() {
 
   // Real-time embedding state
   const [modelStatus, setModelStatus] = useState<ModelStatus>('idle');
+  const [modelError, setModelError] = useState('');
   const [inputWord, setInputWord] = useState('');
   const [computing, setComputing] = useState(false);
   const [result, setResult] = useState<UserResult | null>(null);
@@ -107,10 +108,13 @@ export function EmbeddingsPage() {
     if (embedderRef.current || modelStatus === 'loading') return;
     setModelStatus('loading');
     try {
-      const { pipeline } = await import('@xenova/transformers');
+      const { pipeline } = await import('@huggingface/transformers');
       embedderRef.current = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
       setModelStatus('ready');
-    } catch {
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error('[embeddings] model load failed:', e);
+      setModelError(msg);
       setModelStatus('error');
     }
   }, [modelStatus]);
@@ -305,7 +309,7 @@ export function EmbeddingsPage() {
           )}
           {modelStatus === 'error' && (
             <p style={{ margin: '12px 0 0', fontSize: 12, color: 'var(--red)', fontFamily: 'var(--font-mono)' }}>
-              failed to load model — check your connection and try again
+              failed to load model — {modelError || 'check the browser console for details'}
             </p>
           )}
           {modelStatus === 'ready' && !result && !computing && (
