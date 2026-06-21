@@ -4,6 +4,7 @@ const MODULES = [
   { path: '/nn', label: 'Neural Network' },
   { path: '/tokenizer', label: 'Tokenizer' },
   { path: '/activations', label: 'Activations' },
+  { path: '/regression', label: 'Regression' },
 ];
 
 export function Nav() {

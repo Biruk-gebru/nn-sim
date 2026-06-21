@@ -34,7 +34,7 @@ const MODULES: Module[] = [
     path: '/regression',
     label: 'Linear Regression',
     tagline: 'Drag data points and watch gradient descent fit a line in real time.',
-    status: 'soon',
+    status: 'live',
     icon: <RegressionIcon />,
   },
   {

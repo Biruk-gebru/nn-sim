@@ -4,6 +4,7 @@ import { Landing } from './pages/Landing';
 import { NNPage } from './pages/NNPage';
 import { TokenizerPage } from './pages/TokenizerPage';
 import { ActivationsPage } from './pages/ActivationsPage';
+import { RegressionPage } from './pages/RegressionPage';
 import { createElement } from 'react';
 
 const rootRoute = createRootRoute({
@@ -38,7 +39,13 @@ const activationsRoute = createRoute({
   component: ActivationsPage,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, nnRoute, tokenizerRoute, activationsRoute]);
+const regressionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/regression',
+  component: RegressionPage,
+});
+
+const routeTree = rootRoute.addChildren([indexRoute, nnRoute, tokenizerRoute, activationsRoute, regressionRoute]);
 
 export const router = createRouter({ routeTree });
 
