@@ -66,12 +66,6 @@ export function Landing() {
         borderBottom: '1px solid var(--border)',
         maxWidth: 1200,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 28 }}>
-          <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }} />
-          <span style={{ fontSize: 12, color: 'var(--text-dim)', fontWeight: 500 }}>
-            Interactive ML demos
-          </span>
-        </div>
 
         <h1 style={{
           margin: '0 0 20px',
