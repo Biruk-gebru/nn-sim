@@ -108,8 +108,10 @@ export function EmbeddingsPage() {
     if (embedderRef.current || modelStatus === 'loading') return;
     setModelStatus('loading');
     try {
-      const { pipeline } = await import('@huggingface/transformers');
-      embedderRef.current = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+      const { pipeline, env } = await import('@huggingface/transformers');
+      env.localModelPath = '/models/';
+      env.allowRemoteModels = false;
+      embedderRef.current = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', { dtype: 'q8' });
       setModelStatus('ready');
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
@@ -304,7 +306,7 @@ export function EmbeddingsPage() {
           {/* Status / progress */}
           {modelStatus === 'loading' && (
             <p style={{ margin: '12px 0 0', fontSize: 12, color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
-              downloading all-MiniLM-L6-v2 (~22 MB) — runs entirely in your browser, no server involved
+              loading all-MiniLM-L6-v2 (~22 MB) — runs entirely in your browser via WebAssembly
             </p>
           )}
           {modelStatus === 'error' && (

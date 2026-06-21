@@ -8,10 +8,4 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@huggingface/transformers', 'onnxruntime-web'],
   },
-  server: {
-    headers: {
-      'Cross-Origin-Opener-Policy': 'same-origin',
-      'Cross-Origin-Embedder-Policy': 'require-corp',
-    },
-  },
 })
