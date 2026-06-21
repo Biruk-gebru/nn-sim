@@ -37,7 +37,7 @@
   --green-dim:    rgba(160, 200, 74, 0.13);
 
   /* Typography */
-  --font-display: 'Syne', system-ui, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
   --font-body:    'DM Sans', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, monospace;
 }

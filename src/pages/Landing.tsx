@@ -107,7 +107,6 @@ export function Landing() {
             {[
               { n: '6', label: 'modules' },
               { n: '100%', label: 'in-browser' },
-              { n: '0', label: 'sign-ups' },
             ].map(({ n, label }) => (
               <div key={label}>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 700, color: 'var(--text)', display: 'block', lineHeight: 1 }}>{n}</span>
