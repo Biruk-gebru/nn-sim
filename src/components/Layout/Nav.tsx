@@ -30,14 +30,14 @@ export function Nav() {
         style={{
           color: isHome ? 'var(--accent)' : 'var(--text-mid)',
           textDecoration: 'none',
-          fontFamily: 'var(--font-display)',
-          fontSize: 14,
-          fontWeight: 700,
-          letterSpacing: 1.5,
+          fontFamily: 'var(--font-body)',
+          fontSize: 15,
+          fontWeight: 600,
+          letterSpacing: 0,
           transition: 'color 0.15s',
         }}
       >
-        ML PLAYGROUND
+        ML Playground
       </Link>
 
       <div style={{ width: 1, height: 20, background: 'var(--border-mid)', opacity: 0.4 }} />
